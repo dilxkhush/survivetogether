@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Survive Together - Community Support</title>
-    <!-- Load Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Load Inter font -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <!-- Load Tailwind CSS --><script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Inter font --><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
     <style>
         /* Apply Inter font */
+        :root {
+            scroll-behavior: smooth;
+        }
         body {
             font-family: 'Inter', sans-serif;
         }
@@ -21,60 +22,207 @@
         .modal-open {
             overflow: hidden;
         }
+        /* Hero section background image */
+        .hero-background {
+            background-image: url('https://image.pollinations.ai/prompt/Flood%20impact%20on%20village,%20poignant,%20sad%20sky,%20realistic?width=1600&height=900&seed=123'); /* Sad flood image */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+        }
+        .hero-background::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5); /* Dark overlay for text readability */
+            z-index: 1;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Loading spinner */
+        .spinner {
+            border: 2px solid rgba(0, 0, 0, 0.1);
+            border-left-color: #fff;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Animated Progress Bar */
+        .progress-bar-fill {
+            background-image: linear-gradient(
+                45deg,
+                rgba(255, 255, 255, 0.2) 25%,
+                transparent 25%,
+                transparent 50%,
+                rgba(255, 255, 255, 0.2) 50%,
+                rgba(255, 255, 255, 0.2) 75%,
+                transparent 75%,
+                transparent
+            );
+            background-size: 40px 40px;
+            animation: progress-active 2s linear infinite;
+            transition: width 1.5s ease-out; /* Smooth width change on update */
+        }
+        
+        @keyframes progress-active {
+            0% { background-position: 0 0; }
+            100% { background-position: 40px 0; }
+        }
+
+
+        /* Image Slider (Carousel) */
+        .slider-container {
+            position: relative;
+            max-width: 800px;
+            margin: auto;
+            overflow: hidden;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .slider-wrapper {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        .slider-slide {
+            min-width: 100%;
+            box-sizing: border-box;
+        }
+        .slider-slide img {
+            width: 100%;
+            height: 450px;
+            object-fit: cover;
+            display: block;
+        }
+        .slider-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 1rem;
+            box-sizing: border-box;
+        }
+        .slider-nav button {
+            background-color: rgba(255, 255, 255, 0.7);
+            border: none;
+            border-radius: 50%;
+            width: 2.5rem;
+            height: 2.5rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .slider-nav button:hover {
+            background-color: white;
+        }
+        .slider-dots {
+            position: absolute;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.5rem;
+        }
+        .slider-dot {
+            width: 0.75rem;
+            height: 0.75rem;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .slider-dot.active {
+            background-color: white;
+        }
+
+        /* Fake Notification Toast */
+        #toast-notification {
+            position: fixed;
+            bottom: 1.5rem;
+            left: 1.5rem;
+            background-color: white;
+            color: #333;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transform: translateX(-150%);
+            opacity: 0;
+            transition: all 0.5s ease-in-out;
+            max-width: 320px;
+        }
+        #toast-notification.show {
+            transform: translateX(0);
+            opacity: 1;
+        }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-900">
 
-    <!-- Header -->
-    <header class="bg-white shadow-md">
+    <!-- Header --><header id="home" class="bg-white shadow-md sticky top-0 z-40">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
             <h1 class="text-3xl font-bold text-blue-600">Survive Together</h1>
             <div>
-                <a href="#" class="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-lg font-medium">Home</a>
-                <a href="#" class="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-lg font-medium">About</a>
-                <a href="#" class="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-lg font-medium">Contact</a>
+                <a href="#home" class="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-lg font-medium">Home</a>
+                <a href="#about" class="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-lg font-medium">About</a>
+                <a href="#contact" class="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-lg font-medium">Contact</a>
             </div>
         </nav>
     </header>
 
-    <!-- Main Content -->
-    <main class="container mx-auto px-6 py-12">
+    <!-- Main Content --><main class="container mx-auto px-6 py-12">
         
-        <!-- Hero Section -->
-        <section class="text-center mb-16">
-            <h2 class="text-5xl font-bold text-gray-800 mb-4">Connecting Communities in Crisis</h2>
-            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                In times of need, nobody should be alone. <span class="font-semibold text-blue-600">Survive Together</span> is a platform to connect those who need help with those who can provide it.
-            </p>
+        <!-- Hero Section with Background Image --><section class="hero-background text-white text-center py-20 md:py-32 mb-16 rounded-lg overflow-hidden">
+            <div class="hero-content max-w-4xl mx-auto px-4">
+                <h2 class="text-5xl md:text-6xl font-extrabold mb-4 drop-shadow-lg">Connecting Communities in Crisis</h2>
+                <p class="text-xl md:text-2xl max-w-3xl mx-auto drop-shadow-md">
+                    In times of need, nobody should be alone. <span class="font-semibold text-blue-300">Survive Together</span> is a platform to connect those who need help with those who can provide it.
+                </p>
+            </div>
         </section>
 
-        <!-- Call-to-Action Buttons -->
-        <section class="max-w-4xl mx-auto">
+        <!-- Call-to-Action Buttons --><section class="max-w-4xl mx-auto mb-16">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 
-                <!-- Get Help Button (Updated) -->
-                <button id="getHelpBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold p-6 rounded-lg shadow-xl transform hover:-translate-y-1 transition duration-300 ease-in-out">
-                    <div class="flex items-center space-x-4"> <!-- "Sideways" layout -->
-                        <img src="https://placehold.co/80x80/FFFFFF/3B82F6?text=Help" 
-                             class="w-20 h-20 rounded-lg flex-shrink-0" 
-                             alt="Help Icon"
-                             onerror="this.src='https://placehold.co/80x80/FFFFFF/3B82F6?text=Help'; this.onerror=null;">
+                <!-- Sufferer Button --><button id="getHelpBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold p-6 rounded-lg shadow-xl transform hover:-translate-y-1 transition duration-300 ease-in-out group">
+                    <div class="flex items-center space-x-4">
+                        <img src="https://image.pollinations.ai/prompt/Community%20resilience%20after%20flood,%20people%20helping%20each%20other,%20hopeful%20sunset,%20realistic?width=80&height=80&seed=456" 
+                             class="w-20 h-20 rounded-lg flex-shrink-0 object-cover group-hover:scale-105 transition-transform duration-300" 
+                             alt="Community Help Icon">
                         <div class="text-left">
-                            <h3 class="text-2xl font-bold">🤝 I Need Help</h3> <!-- Emoji added -->
+                            <h3 class="text-2xl font-bold">🤝 Sufferer</h3>
                             <p class="text-lg font-normal mt-1">Find resources and support near you.</p>
                         </div>
                     </div>
                 </button>
 
-                <!-- Offer Help Button (Updated) -->
-                <button id="offerHelpBtn" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold p-6 rounded-lg shadow-xl transform hover:-translate-y-1 transition duration-300 ease-in-out">
-                    <div class="flex items-center space-x-4"> <!-- "Sideways" layout -->
-                        <img src="https://placehold.co/80x80/FFFFFF/16A34A?text=Give" 
-                             class="w-20 h-20 rounded-lg flex-shrink-0" 
-                             alt="Offer Help Icon"
-                             onerror="this.src='https://placehold.co/80x80/FFFFFF/16A34A?text=Give'; this.onerror=null;">
+                <!-- Volunteer Button --><button id="offerHelpBtn" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold p-6 rounded-lg shadow-xl transform hover:-translate-y-1 transition duration-300 ease-in-out group">
+                    <div class="flex items-center space-x-4">
+                        <img src="https://image.pollinations.ai/prompt/People%20actively%20helping%20flood%20victims,%20distributing%20aid,%20hopeful%20and%20encouraging,%20realistic?width=80&height=80&seed=789" 
+                             class="w-20 h-20 rounded-lg flex-shrink-0 object-cover group-hover:scale-105 transition-transform duration-300" 
+                             alt="Offer Help Icon">
                         <div class="text-left">
-                            <h3 class="text-2xl font-bold">❤️ I Want to Help</h3> <!-- Emoji added -->
+                            <h3 class="text-2xl font-bold">❤️ Volunteer</h3>
                             <p class="text-lg font-normal mt-1">Offer support, donations, or volunteer.</p>
                         </div>
                     </div>
@@ -83,28 +231,76 @@
             </div>
         </section>
 
-        <!-- Info Section -->
-        <section class="mt-20 text-center">
-            <h3 class="text-4xl font-bold text-gray-800 mb-6">How It Works</h3>
+        <!-- Image Showcase Slider --><section class="mb-16">
+            <h3 class="text-4xl font-bold text-center text-gray-800 mb-8">Glimpses of Hope</h3>
+            <div class="slider-container">
+                <div class="slider-wrapper">
+                    <div class="slider-slide">
+                        <img src="https://image.pollinations.ai/prompt/Family%20receiving%20aid%20after%20flood,%20grateful%20and%20relieved%20expressions,%20hopeful%20lighting,%20realistic?width=800&height=450&seed=1011" alt="Family receiving aid">
+                    </div>
+                    <div class="slider-slide">
+                        <img src="https://image.pollinations.ai/prompt/People%20donating%20money%20to%20a%20charity%20box,%20community%20fundraiser,%20hands%20exchanging%20money,%20encouraging%20and%20realistic?width=800&height=450&seed=1314" alt="People donating money">
+                    </div>
+                    <div class="slider-slide">
+                        <img src="https://image.pollinations.ai/prompt/Community%20resilience%20after%20flood,%20people%20helping%20each%20other,%20hopeful%20sunset,%20realistic?width=800&height=450&seed=456" alt="Community resilience">
+                    </div>
+                    <div class="slider-slide">
+                        <img src="https://image.pollinations.ai/prompt/People%20actively%20helping%20flood%20victims,%20distributing%20aid,%20hopeful%20and%20encouraging,%20realistic?width=800&height=450&seed=789" alt="People actively helping">
+                    </div>
+                </div>
+                <div class="slider-nav">
+                    <button id="prevSlide">❮</button>
+                    <button id="nextSlide">❯</button>
+                </div>
+                <div class="slider-dots"></div>
+            </div>
+        </section>
+
+        <!-- Donation Progress Bar Section (Live Counter) --><section class="mb-16 bg-blue-50 p-8 rounded-lg shadow-lg text-center">
+            <h3 class="text-4xl font-bold text-gray-800 mb-4">Our Collective Impact</h3>
+            
+            <div class="text-center mb-4">
+                <span class="text-lg font-medium text-gray-600">Total Support Raised</span>
+                <div id="amountRaisedText" class="text-5xl font-bold text-gray-800 my-2">₹1,50,000</div>
+            </div>
+
+            <div class="relative w-full bg-gray-200 rounded-full h-8 mb-4">
+                <div class="progress-bar-fill bg-green-500 h-8 rounded-full" 
+                     role="progressbar" 
+                     aria-valuenow="30" 
+                     aria-valuemin="0" 
+                     aria-valuemax="100" 
+                     style="width: 30%;">
+                    <!-- Text removed from inside -->
+                </div>
+            </div>
+            <p id="donationStatusText" class="text-lg text-gray-600">Your support is invaluable!</p>
+        </section>
+
+
+        <!-- About Us Section --><section id="about" class="mt-20 pt-16 text-center">
+            <h3 class="text-4xl font-bold text-gray-800 mb-6">About Us</h3>
+            <p class="text-xl text-gray-700 max-w-3xl mx-auto mb-12">
+                Our mission is simple: to build a bridge of support between those affected by crisis and those with the will to help. 
+                We believe in the power of community and technology to bring immediate, effective, and compassionate relief.
+            </p>
+            <h4 class="text-3xl font-semibold text-gray-800 mb-8">How It Works</h4>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Step 1 -->
-                <div class="bg-white p-8 rounded-lg shadow-lg">
+                <!-- Step 1 --><div class="bg-white p-8 rounded-lg shadow-lg">
                     <div class="bg-blue-100 text-blue-600 rounded-full h-16 w-16 flex items-center justify-center mx-auto mb-4">
                         <span class="text-3xl font-bold">1</span>
                     </div>
                     <h4 class="text-2xl font-semibold mb-2">Choose Your Path</h4>
-                    <p class="text-gray-600">Select whether you need assistance or want to offer help.</p>
+                    <p class="text-gray-600">Select whether you are a sufferer or a volunteer.</p>
                 </div>
-                <!-- Step 2 -->
-                <div class="bg-white p-8 rounded-lg shadow-lg">
+                <!-- Step 2 --><div class="bg-white p-8 rounded-lg shadow-lg">
                     <div class="bg-blue-100 text-blue-600 rounded-full h-16 w-16 flex items-center justify-center mx-auto mb-4">
                         <span class="text-3xl font-bold">2</span>
                     </div>
                     <h4 class="text-2xl font-semibold mb-2">Fill Out the Form</h4>
                     <p class="text-gray-600">Provide details about your needs or what you can offer.</p>
                 </div>
-                <!-- Step 3 -->
-                <div class="bg-white p-8 rounded-lg shadow-lg">
+                <!-- Step 3 --><div class="bg-white p-8 rounded-lg shadow-lg">
                     <div class="bg-blue-100 text-blue-600 rounded-full h-16 w-16 flex items-center justify-center mx-auto mb-4">
                         <span class="text-3xl font-bold">3</span>
                     </div>
@@ -113,22 +309,35 @@
                 </div>
             </div>
         </section>
+
+        <!-- Contact Us Section --><section id="contact" class="mt-20 pt-16 text-center bg-white p-12 rounded-lg shadow-lg">
+            <h3 class="text-4xl font-bold text-gray-800 mb-6">Get In Touch</h3>
+            <p class="text-xl text-gray-700 max-w-2xl mx-auto mb-4">
+                Have questions or need to speak with our team directly? 
+                Please don't hesitate to reach out. We are here to help.
+            </p>
+            <a href="mailto:contact@survivetogether.fake" class="text-2xl font-semibold text-blue-600 hover:text-blue-800 transition duration-300">
+                contact@survivetogether.fake
+            </a>
+        </section>
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-white mt-16 py-8">
+    <!-- Footer --><footer class="bg-gray-800 text-white mt-16 py-8">
         <div class="container mx-auto px-6 text-center">
             <p>&copy; 2025 Survive Together. All rights reserved.</p>
             <p class="mt-2">Building stronger communities, together.</p>
         </div>
     </footer>
 
-    <!-- Modal -->
-    <div id="modal" class="fixed inset-0 z-50 items-center justify-center hidden modal-backdrop">
+    <!-- Fake Notification Toast HTML --><div id="toast-notification">
+        <span id="toast-icon" class="text-xl"></span>
+        <span id="toast-message" class="font-medium"></span>
+    </div>
+
+    <!-- Modal --><div id="modal" class="fixed inset-0 z-50 items-center justify-center hidden modal-backdrop">
         <div id="modalContent" class="bg-white rounded-lg shadow-2xl max-w-lg w-full m-4 overflow-y-auto" style="max-height: 90vh;">
             
-            <!-- Modal Header -->
-            <div class="flex justify-between items-center border-b p-5">
+            <!-- Modal Header --><div class="flex justify-between items-center border-b p-5">
                 <h3 id="modalTitle" class="text-3xl font-semibold text-gray-800"></h3>
                 <button id="closeModalBtn" class="text-gray-400 hover:text-gray-600">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -137,20 +346,29 @@
                 </button>
             </div>
 
-            <!-- Modal Body -->
-            <div class="p-6">
+            <!-- Modal Body --><div class="p-6">
                 <form id="supportForm">
-                    <!-- Form content will be injected here by JS -->
-                </form>
+                    <!-- Form content will be injected here by JS --></form>
                 
-                <!-- Success Message -->
-                <div id="successMessage" class="hidden text-center">
+                <!-- Success Message (Generic) --><div id="successMessage" class="hidden text-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 text-green-500 mx-auto mb-4" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                     </svg>
                     <h4 class="text-3xl font-semibold text-gray-800 mb-2">Thank You!</h4>
                     <p class="text-lg text-gray-600">Your request has been submitted. We will be in touch soon.</p>
                     <button id="closeSuccessBtn" type="button" class="mt-6 w-full bg-blue-600 text-white py-3 px-6 rounded-lg text-lg font-medium hover:bg-blue-700 transition duration-300">
+                        Done
+                    </button>
+                </div>
+                
+                <!-- Success Message (QR Code) --><div id="qrSuccessMessage" class="hidden text-center">
+                    <h4 class="text-3xl font-semibold text-gray-800 mb-4">Complete Your Donation</h4>
+                    <p class="text-lg text-gray-600 mb-6">Thank you for your generosity! Please scan the QR code below with your payment app to complete the donation.</p>
+                    <img id="qrCodeImg" src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=SurviveTogether-Donation" alt="QR Code for Donation" class="mx-auto my-4 border-4 border-gray-200 rounded-lg">
+                    <p class="text-lg text-gray-700 font-medium">After payment, please send a screenshot to:</p>
+                    <p class="text-xl font-bold text-blue-600 my-2">donations@survivetogether.fake</p>
+                    <p class="text-md text-gray-500">This helps us track your donation and send you a receipt.</p>
+                    <button id="closeQrSuccessBtn" type="button" class="mt-8 w-full bg-blue-600 text-white py-3 px-6 rounded-lg text-lg font-medium hover:bg-blue-700 transition duration-300">
                         Done
                     </button>
                 </div>
@@ -165,6 +383,7 @@
         const modalTitle = document.getElementById('modalTitle');
         const closeModalBtn = document.getElementById('closeModalBtn');
         const closeSuccessBtn = document.getElementById('closeSuccessBtn');
+        const closeQrSuccessBtn = document.getElementById('closeQrSuccessBtn');
         
         // Get button elements
         const getHelpBtn = document.getElementById('getHelpBtn');
@@ -173,8 +392,92 @@
         // Get form and success message
         const formContainer = document.getElementById('supportForm');
         const successMessage = document.getElementById('successMessage');
+        const qrSuccessMessage = document.getElementById('qrSuccessMessage');
+        const qrCodeImg = document.getElementById('qrCodeImg');
 
-        // Form HTML templates
+        // Donation Progress Bar Elements
+        const progressBarFill = document.querySelector('.progress-bar-fill');
+        const amountRaisedText = document.getElementById('amountRaisedText');
+        const donationStatusText = document.getElementById('donationStatusText');
+        
+        // Use a large internal goal so the bar grows slowly
+        const internalGoal = 500000; // Starting at 150k, this is 30%
+        let currentAmountRaised = 150000; // Starting value (as requested)
+
+        // --- Gemini API Configuration ---
+        const apiKey = ""; // Per instructions, leave empty.
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+
+        /**
+         * Shows a loading state on a button
+         * @param {HTMLButtonElement} button - The button element
+         * @param {boolean} isLoading - Whether to show loading or not
+         * @param {string} [originalText] - The original text to restore
+         */
+        function showLoading(button, isLoading, originalText = '✨ Generate') {
+            if (isLoading) {
+                button.disabled = true;
+                button.innerHTML = `<div class="flex items-center justify-center space-x-2">
+                                    <div class="spinner"></div>
+                                    <span>Loading...</span>
+                                </div>`;
+            } else {
+                button.disabled = false;
+                button.innerHTML = originalText;
+            }
+        }
+
+        /**
+         * Calls the Gemini API with exponential backoff
+         * @param {string} prompt - The user prompt
+         * @param {string} [systemInstruction] - The system instruction
+         * @param {number} maxRetries - Maximum number of retries
+         * @returns {Promise<string>} - The generated text
+         */
+        async function callGeminiAPI(prompt, systemInstruction = null, maxRetries = 3) {
+            const payload = {
+                contents: [{ parts: [{ text: prompt }] }],
+            };
+            if (systemInstruction) {
+                payload.systemInstruction = { parts: [{ text: systemInstruction }] };
+            }
+
+            let delay = 1000; // Start with 1 second
+            for (let i = 0; i < maxRetries; i++) {
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`API Error: ${response.statusText}`);
+                    }
+
+                    const result = await response.json();
+                    const candidate = result.candidates?.[0];
+
+                    if (candidate && candidate.content?.parts?.[0]?.text) {
+                        return candidate.content.parts[0].text;
+                    } else {
+                        throw new Error("Invalid response structure from API.");
+                    }
+                } catch (error) {
+                    console.error(`Attempt ${i + 1} failed:`, error);
+                    if (i === maxRetries - 1) {
+                        return "Sorry, I couldn't get a response right now. Please try again later.";
+                    }
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                    delay *= 2; // Exponential backoff
+                }
+            }
+            return "Sorry, I'm having trouble connecting. Please try again later.";
+        }
+        // --- End Gemini API ---
+
+
+        // --- Form HTML Templates ---
         const getHelpForm = `
             <p class="text-gray-600 mb-6 text-lg">Please let us know what you need. All information is confidential.</p>
             <div class="space-y-4">
@@ -201,9 +504,19 @@
                     </select>
                 </div>
                 <div>
-                    <label for="details" class="block text-lg font-medium text-gray-700">Additional Details</label>
-                    <textarea id="details" name="details" rows="4" class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-lg"></textarea>
+                    <div class="flex justify-between items-center">
+                        <label for="details" class="block text-lg font-medium text-gray-700">Additional Details</label>
+                        <button type="button" id="suggestDetailsBtn" class="text-sm text-blue-600 hover:text-blue-800 font-medium">✨ Help Me List My Needs</button>
+                    </div>
+                    <textarea id="details" name="details" rows="4" class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-lg" placeholder="Be as specific as possible..."></textarea>
                 </div>
+                
+                <!-- Gemini Hope Message Feature -->
+                <div class="pt-2 text-center">
+                    <button type="button" id="getHopeBtn" class="w-full bg-gray-100 text-blue-700 py-2 px-4 rounded-lg text-md font-medium hover:bg-gray-200 transition duration-300 border border-blue-200">✨ Get a Hopeful Message</button>
+                    <div id="hopeMessage" class="mt-4 p-4 bg-blue-50 text-blue-800 rounded-lg hidden text-left font-medium"></div>
+                </div>
+
                 <div class="pt-2">
                     <button type="submit" class="w-full bg-blue-600 text-white py-3 px-6 rounded-lg text-lg font-medium hover:bg-blue-700 transition duration-300">
                         Submit Request
@@ -237,9 +550,16 @@
                         <option>Other</option>
                     </select>
                 </div>
+                
+                <!-- Gemini Volunteer Ideas Feature -->
+                <div id="volunteerIdeasContainer" class="hidden space-y-2">
+                    <button type="button" id="getVolunteerIdeasBtn" class="w-full bg-gray-100 text-green-700 py-2 px-4 rounded-lg text-md font-medium hover:bg-gray-200 transition duration-300 border border-green-200">✨ Get Volunteer Ideas</button>
+                    <ul id="volunteerIdeas" class="mt-4 p-4 bg-green-50 text-green-800 rounded-lg hidden text-left font-medium list-disc list-inside space-y-1"></ul>
+                </div>
+
                 <div>
-                    <label for="availability" class="block text-lg font-medium text-gray-700">Availability</label>
-                    <input type="text" id="availability" name="availability" placeholder="e.g., Weekends, Evenings" class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-lg">
+                    <label for="availability" class="block text-lg font-medium text-gray-700">Availability / Details</label>
+                    <input type="text" id="availability" name="availability" placeholder="e.g., Weekends, Evenings, or specific goods" class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-lg">
                 </div>
                 <div class="pt-2">
                     <button type="submit" class="w-full bg-green-600 text-white py-3 px-6 rounded-lg text-lg font-medium hover:bg-green-700 transition duration-300">
@@ -248,34 +568,291 @@
                 </div>
             </div>
         `;
+        // --- End Form Templates ---
 
-        // Function to open the modal
+        /**
+         * Animates a number counting up
+         * @param {HTMLElement} element - The element to animate
+         * @param {number} endValue - The final number
+         * @param {number} duration - Animation duration in ms
+         */
+        function animateCountUp(element, endValue, duration = 1500) {
+            const startValue = parseInt(element.innerText.replace(/₹|,/g, '')) || 0;
+            const change = endValue - startValue;
+            let startTime = null;
+
+            function step(timestamp) {
+                if (!startTime) startTime = timestamp;
+                const progress = Math.min((timestamp - startTime) / duration, 1);
+                // Apply ease-out quad formula for a smoother animation
+                const easedProgress = progress * (2 - progress);
+                const currentValue = Math.floor(easedProgress * change + startValue);
+                
+                element.innerText = `₹${currentValue.toLocaleString('en-IN')}`;
+                
+                if (progress < 1) {
+                    requestAnimationFrame(step);
+                }
+            }
+            requestAnimationFrame(step);
+        }
+
+        /**
+         * Updates the donation tracker (text and bar)
+         * @param {number} donationAmount - The amount to add
+         * @param {boolean} [useAnimation=true] - Whether to animate the number
+         */
+        const updateDonationTracker = (donationAmount, useAnimation = true) => {
+            const newTotal = currentAmountRaised + donationAmount;
+            
+            // Animate the number counting up
+            if (useAnimation) {
+                animateCountUp(amountRaisedText, newTotal, 1500);
+            } else {
+                amountRaisedText.innerText = `₹${newTotal.toLocaleString('en-IN')}`;
+            }
+
+            // Update the bar width
+            const newPercentage = (newTotal / internalGoal) * 100;
+            progressBarFill.style.width = `${Math.min(newPercentage, 100)}%`;
+            progressBarFill.setAttribute('aria-valuenow', newPercentage);
+
+            // Update the global total
+            currentAmountRaised = newTotal;
+
+            // Update status text
+            donationStatusText.innerText = "Increasing...";
+            donationStatusText.classList.add('text-green-600');
+
+            // Reset status text after animation
+            setTimeout(() => {
+                donationStatusText.innerText = "Your support is invaluable!";
+                donationStatusText.classList.remove('text-green-600');
+            }, 2000);
+        };
+
+        /**
+         * Opens the modal with specific content
+         * @param {string} title - The title for the modal
+         * @param {string} formHtml - The HTML content for the form
+         */
         const openModal = (title, formHtml) => {
             modalTitle.innerText = title;
             formContainer.innerHTML = formHtml;
             formContainer.style.display = 'block';
-            successMessage.style.display = 'none';
+            successMessage.style.display = 'none'; // Hide all success messages
+            qrSuccessMessage.style.display = 'none'; // Hide all success messages
             modal.style.display = 'flex';
             document.body.classList.add('modal-open');
+
+            if (title === 'Sufferer Assistance') {
+                addGetHelpListeners();
+            } else if (title === 'Volunteer Support') {
+                addOfferHelpListeners();
+            }
         };
 
-        // Function to close the modal
+        /**
+         * Closes the modal
+         */
         const closeModal = () => {
             modal.style.display = 'none';
             document.body.classList.remove('modal-open');
         };
 
-        // Event Listeners
+        // --- Gemini Event Listener Functions ---
+        function addGetHelpListeners() {
+            const suggestDetailsBtn = document.getElementById('suggestDetailsBtn');
+            const getHopeBtn = document.getElementById('getHopeBtn');
+            const hopeMessageDiv = document.getElementById('hopeMessage');
+            const detailsTextarea = document.getElementById('details');
+            const needsSelect = document.getElementById('needs');
+
+            suggestDetailsBtn.addEventListener('click', async () => {
+                const need = needsSelect.value;
+                const originalText = '✨ Help Me List My Needs';
+                showLoading(suggestDetailsBtn, true, originalText);
+                
+                const prompt = `I am filling out a form for disaster relief. The category I selected is "${need}". 
+Give me 3-4 specific examples of what to write in the 'Additional Details' section to get the best help.
+Format the response as a single block of text, with each example on a new line.
+Do not add any intro or outro text.
+Example:
+- Need baby formula (Enfamil) and size 4 diapers.
+- Two adults, one child (age 3).
+- Stranded at [Location], no clean water.`;
+                
+                const suggestions = await callGeminiAPI(prompt, "You are a helpful assistant for a disaster relief website.");
+                detailsTextarea.value = suggestions;
+                showLoading(suggestDetailsBtn, false, originalText);
+            });
+
+            getHopeBtn.addEventListener('click', async () => {
+                const originalText = '✨ Get a Hopeful Message';
+                showLoading(getHopeBtn, true, originalText);
+                hopeMessageDiv.classList.add('hidden');
+
+                const prompt = "Write a short, 1-2 sentence hopeful and encouraging message for someone who has been affected by a natural disaster and is asking for " +
+"help.";
+                const message = await callGeminiAPI(prompt, "You are a kind and supportive counselor.");
+                
+                hopeMessageDiv.innerText = message;
+                hopeMessageDiv.classList.remove('hidden');
+                showLoading(getHopeBtn, false, originalText);
+            });
+        }
+
+        function addOfferHelpListeners() {
+            const offeringsSelect = document.getElementById('offerings');
+            const volunteerContainer = document.getElementById('volunteerIdeasContainer');
+            const getVolunteerIdeasBtn = document.getElementById('getVolunteerIdeasBtn');
+            const volunteerIdeasUl = document.getElementById('volunteerIdeas');
+
+            if (offeringsSelect.value === 'Volunteer Time') {
+                volunteerContainer.classList.remove('hidden');
+            }
+
+            offeringsSelect.addEventListener('change', () => {
+                if (offeringsSelect.value === 'Volunteer Time') {
+                    volunteerContainer.classList.remove('hidden');
+                } else {
+                    volunteerContainer.classList.add('hidden');
+                    volunteerIdeasUl.classList.add('hidden');
+                }
+            });
+
+            getVolunteerIdeasBtn.addEventListener('click', async () => {
+                const originalText = '✨ Get Volunteer Ideas';
+                showLoading(getVolunteerIdeasBtn, true, originalText);
+                volunteerIdeasUl.classList.add('hidden');
+
+                const prompt = `I want to volunteer my time to help after a flood, but I don't know how. 
+Give me 3 creative and practical volunteer ideas that one person can do.
+Format them as a simple list. Start each item with a *.
+Example:
+* Organize a donation drive in your neighborhood for specific items (like blankets, or canned goods).
+* Offer childcare for families busy with cleanup.`;
+                
+                const ideas = await callGeminiAPI(prompt, "You are a helpful volunteer coordinator.");
+                
+                volunteerIdeasUl.innerHTML = '';
+                const ideaList = ideas.split('*').filter(item => item.trim().length > 0);
+                ideaList.forEach(idea => {
+                    const li = document.createElement('li');
+                    li.innerText = idea.trim();
+                    volunteerIdeasUl.appendChild(li);
+                });
+
+                volunteerIdeasUl.classList.remove('hidden');
+                showLoading(getVolunteerIdeasBtn, false, originalText);
+            });
+        }
+        // --- End Gemini Functions ---
+
+        // --- Image Slider Logic ---
+        const sliderWrapper = document.querySelector('.slider-wrapper');
+        const slides = document.querySelectorAll('.slider-slide');
+        const nextBtn = document.getElementById('nextSlide');
+        const prevBtn = document.getElementById('prevSlide');
+        const dotsContainer = document.querySelector('.slider-dots');
+        let currentSlide = 0;
+        let autoPlayInterval = setInterval(nextSlide, 5000);
+
+        function createDots() {
+            slides.forEach((_, i) => {
+                const dot = document.createElement('div');
+                dot.classList.add('slider-dot');
+                if (i === 0) dot.classList.add('active');
+                dot.addEventListener('click', () => goToSlide(i));
+                dotsContainer.appendChild(dot);
+            });
+        }
+
+        function updateDots() {
+            const dots = document.querySelectorAll('.slider-dot');
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentSlide);
+            });
+        }
+
+        function goToSlide(slideIndex) {
+            currentSlide = (slideIndex + slides.length) % slides.length;
+            sliderWrapper.style.transform = `translateX(-${currentSlide * 100}%)`;
+            updateDots();
+            resetAutoPlay();
+        }
+
+        function nextSlide() {
+            goToSlide(currentSlide + 1);
+        }
+
+        function prevSlide() {
+            goToSlide(currentSlide - 1);
+        }
+
+        function resetAutoPlay() {
+            clearInterval(autoPlayInterval);
+            autoPlayInterval = setInterval(nextSlide, 5000);
+        }
+
+        nextBtn.addEventListener('click', nextSlide);
+        prevBtn.addEventListener('click', prevSlide);
+        createDots();
+        // --- End Image Slider Logic ---
+
+
+        // --- Fake Notification Toast Logic ---
+        const toast = document.getElementById('toast-notification');
+        const toastIcon = document.getElementById('toast-icon');
+        const toastMessage = document.getElementById('toast-message');
+        
+        const randomNames = ["Ravi", "Meena", "Sonal", "Amit", "Priya", "Raj", "Sunita", "Vikram", "Anjali", "Karan", "Pooja"];
+        const randomEmojis = ['❤️', '🙌', '✨', '🙏', '🎉'];
+
+        function showToast() {
+            const randomName = randomNames[Math.floor(Math.random() * randomNames.length)];
+            let message = '';
+            let icon = '';
+
+            if (Math.random() < 0.25) { // 25% chance for non-donation message
+                message = `${randomName} just signed up to volunteer!`;
+                icon = '🤝';
+            } else {
+                const randomAmount = Math.floor(Math.random() * 450 + 50) * 10; // 500 to 5000, in steps of 10
+                const randomEmoji = randomEmojis[Math.floor(Math.random() * randomEmojis.length)];
+                message = `${randomName} just donated ₹${randomAmount.toLocaleString('en-IN')}! ${randomEmoji}`;
+                icon = '❤️';
+            }
+            
+            toastIcon.innerText = icon;
+            toastMessage.innerText = message;
+            toast.classList.add('show');
+
+            // Hide toast after 5 seconds
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 5000);
+        }
+        
+        // Show a toast every 12 seconds
+        setInterval(showToast, 12000);
+        // Show one on load after a delay
+        setTimeout(showToast, 3000);
+        // --- End Fake Notification Toast Logic ---
+
+
+        // --- Main Event Listeners ---
         getHelpBtn.addEventListener('click', () => {
-            openModal('Request Assistance', getHelpForm);
+            openModal('Sufferer Assistance', getHelpForm);
         });
 
         offerHelpBtn.addEventListener('click', () => {
-            openModal('Offer Support', offerHelpForm);
+            openModal('Volunteer Support', offerHelpForm);
         });
 
         closeModalBtn.addEventListener('click', closeModal);
         closeSuccessBtn.addEventListener('click', closeModal);
+        closeQrSuccessBtn.addEventListener('click', closeModal);
 
         // Close modal when clicking on the backdrop
         modal.addEventListener('click', (e) => {
@@ -287,11 +864,64 @@
         // Handle form submission
         formContainer.addEventListener('submit', (e) => {
             e.preventDefault();
-            // In a real app, you would send this data to a server.
-            // For this demo, we just show the success message.
             console.log('Form submitted');
+            
+            const offeringsSelect = formContainer.querySelector('#offerings');
+            const isDonation = offeringsSelect && offeringsSelect.value === 'Donations (Money)';
+
             formContainer.style.display = 'none';
-            successMessage.style.display = 'block';
+
+            if (isDonation) {
+                const randomData = `SurviveTogether-Donation-ID-${Math.random().toString(36).substring(7)}`;
+                qrCodeImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(randomData)}`;
+                
+                qrSuccessMessage.style.display = 'block';
+
+                // Simulate an increase in the progress bar
+                const randomDonation = Math.floor(Math.random() * 4501) + 500; // 500 to 5000
+                updateDonationTracker(randomDonation, true); // Call updated function with animation
+
+            } else {
+                successMessage.style.display = 'block';
+            }
+        });
+
+        // --- NEW: Rapid Auto-Increment for Live Counter ---
+        function startRapidCounter() {
+            setInterval(() => {
+                const randomMicroDonation = Math.floor(Math.random() * 20) + 1; // 1 to 20
+                // We call the function with `false` for animation
+                // This updates the number instantly, making it "tick" up rapidly
+                // But we still animate the bar
+                
+                const newTotal = currentAmountRaised + randomMicroDonation;
+                
+                // We will *not* animate the number, just set it, for a "ticking" effect
+                amountRaisedText.innerText = `₹${newTotal.toLocaleString('en-IN')}`;
+
+                // We will *not* animate the bar width, just set it
+                const newPercentage = (newTotal / internalGoal) * 100;
+                progressBarFill.style.width = `${Math.min(newPercentage, 100)}%`;
+                progressBarFill.setAttribute('aria-valuenow', newPercentage);
+
+                // Update the global total
+                currentAmountRaised = newTotal;
+
+            }, 2500); // Ticks up every 2.5 seconds
+        }
+        // --- END: Rapid Auto-Increment ---
+
+
+        // Initialize progress bar and text on load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Set initial state from variables
+            const initialPercentage = (currentAmountRaised / internalGoal) * 100;
+            progressBarFill.style.width = `${initialPercentage}%`;
+            progressBarFill.setAttribute('aria-valuenow', initialPercentage);
+            amountRaisedText.innerText = `₹${currentAmountRaised.toLocaleString('en-IN')}`;
+            
+            // Start the rapid counter!
+            startRapidCounter();
         });
 
     </script>
