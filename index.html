@@ -1,198 +1,215 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SurviveTogether | Flood Relief Platform</title>
-  <style>
-    * {margin:0;padding:0;box-sizing:border-box;font-family:Poppins, sans-serif;}
-    body {
-      background: radial-gradient(circle at top, #e3f2fd, #90caf9);
-      color:#111;
-      overflow-x:hidden;
-      transition: background 1s;
-    }
-    header {
-      background:rgba(255,255,255,0.8);
-      backdrop-filter:blur(10px);
-      box-shadow:0 2px 10px rgba(0,0,0,0.1);
-      display:flex;justify-content:space-between;align-items:center;
-      padding:1rem 2rem;position:sticky;top:0;z-index:1000;
-    }
-    header h1 {color:#0d47a1;font-size:1.5rem;}
-    nav a {margin:0 10px;color:#0d47a1;text-decoration:none;font-weight:500;}
-    nav a:hover {color:#ef5350;}
-    section {padding:4rem 2rem;text-align:center;}
-    .hero h2 {font-size:2.5rem;color:#0d47a1;}
-    .hero p {margin:1rem auto;max-width:600px;color:#333;}
-    .donate-btn {
-      background:#ef5350;color:white;padding:0.8rem 1.5rem;
-      border:none;border-radius:50px;cursor:pointer;font-size:1rem;
-      transition:transform 0.2s;
-    }
-    .donate-btn:hover {transform:scale(1.1);}
-    /* MAP */
-    .map-container {
-      position:relative;
-      max-width:600px;
-      margin:2rem auto;
-    }
-    .map-container img {
-      width:100%;border-radius:10px;box-shadow:0 0 20px rgba(0,0,0,0.2);
-    }
-    .alert {
-      position:absolute;
-      width:25px;height:25px;
-      border-radius:50%;
-      background:radial-gradient(rgba(255,0,0,0.8), rgba(255,0,0,0.1));
-      animation:pulse 2s infinite;
-    }
-    @keyframes pulse {
-      0% {transform:scale(0.8);opacity:0.8;}
-      50% {transform:scale(1.5);opacity:0.4;}
-      100% {transform:scale(0.8);opacity:0.8;}
-    }
-    /* Donation Tracker */
-    .tracker {
-      background:white;
-      border-radius:15px;
-      padding:1rem;
-      max-width:500px;
-      margin:2rem auto;
-      box-shadow:0 5px 20px rgba(0,0,0,0.1);
-    }
-    .progress-bar {
-      background:#bbdefb;
-      border-radius:10px;
-      height:20px;
-      overflow:hidden;
-      margin-top:10px;
-    }
-    .progress {
-      background:linear-gradient(90deg,#0d47a1,#ef5350);
-      height:100%;
-      width:0%;
-      border-radius:10px;
-      transition:width 1s;
-    }
-    .donation-feed {
-      margin-top:1rem;
-      font-size:0.9rem;
-      height:100px;
-      overflow-y:auto;
-      text-align:left;
-    }
-    /* Survivor stories */
-    .stories {
-      display:flex;flex-wrap:wrap;justify-content:center;gap:1rem;
-    }
-    .story {
-      background:white;
-      border-radius:10px;
-      box-shadow:0 4px 10px rgba(0,0,0,0.1);
-      width:250px;
-      padding:1rem;
-      opacity:0;
-      transform:translateY(50px);
-      transition:all 1s;
-    }
-    .story.visible {
-      opacity:1;
-      transform:translateY(0);
-    }
-    footer {
-      background:#0d47a1;
-      color:white;
-      text-align:center;
-      padding:1rem;
-      margin-top:2rem;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SurviveTogether – Flood Relief</title>
+<style>
+  body {
+    font-family: "Poppins", sans-serif;
+    background: linear-gradient(to bottom right, #e3f2fd, #bbdefb);
+    margin: 0;
+    padding: 0;
+    transition: 0.3s ease;
+  }
+
+  header {
+    background: #1565c0;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    font-size: 26px;
+    font-weight: 600;
+  }
+
+  .container {
+    text-align: center;
+    padding: 40px 20px;
+  }
+
+  .btn {
+    background: #e53935;
+    color: white;
+    border: none;
+    padding: 14px 30px;
+    border-radius: 8px;
+    font-size: 16px;
+    margin: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  .btn:hover {
+    background: #ff5252;
+    transform: scale(1.05);
+  }
+
+  /* Popup forms */
+  .popup {
+    display: none;
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    width: 90%;
+    max-width: 400px;
+    z-index: 10;
+  }
+
+  .popup h3 { margin-top: 0; }
+  .popup input, .popup textarea {
+    width: 95%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+
+  .popup button {
+    margin-top: 10px;
+    padding: 10px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background: #1565c0;
+    color: white;
+  }
+
+  .close-btn {
+    background: #999;
+    float: right;
+  }
+
+  /* QR Popup */
+  #qr-popup {
+    text-align: center;
+  }
+
+  #qr-popup img {
+    width: 200px;
+    border-radius: 10px;
+    margin-top: 10px;
+  }
+
+  /* Map */
+  .map-section {
+    text-align: center;
+    margin: 60px auto;
+  }
+
+  .map-container {
+    position: relative;
+    display: inline-block;
+  }
+
+  .india-map {
+    width: 90%;
+    max-width: 700px;
+    border-radius: 15px;
+    box-shadow: 0 4px 25px rgba(255, 0, 0, 0.3);
+  }
+
+  .alert-zone {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-color: rgba(255, 0, 0, 0.6);
+    animation: pulse 1.5s infinite;
+  }
+
+  .zone1 { top: 35%; left: 60%; }
+  .zone2 { top: 50%; left: 40%; }
+  .zone3 { top: 70%; left: 30%; }
+
+  @keyframes pulse {
+    0% { transform: scale(0.9); opacity: 0.7; }
+    50% { transform: scale(1.3); opacity: 1; }
+    100% { transform: scale(0.9); opacity: 0.7; }
+  }
+
+  footer {
+    background: #1565c0;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    margin-top: 50px;
+  }
+
+</style>
 </head>
 <body>
+<header>🌊 SurviveTogether – Flood Relief</header>
 
-  <header>
-    <h1>SurviveTogether</h1>
-    <nav>
-      <a href="#home">Home</a>
-      <a href="#map">Map</a>
-      <a href="#donate">Donate</a>
-      <a href="#stories">Stories</a>
-    </nav>
-  </header>
+<div class="container">
+  <p>Join hands to help flood survivors. You can donate or register if you need help.</p>
+  <button class="btn" onclick="openDonateForm()">💸 Donate</button>
+  <button class="btn" onclick="openSurvivorForm()">🧍 Survivor Form</button>
+</div>
 
-  <section id="home" class="hero">
-    <h2>Together We Rise Again</h2>
-    <p>Join hands to support families affected by floods across India. Every contribution matters.</p>
-    <button class="donate-btn" onclick="simulateDonation()">💸 Donate Now</button>
-  </section>
+<!-- Donate Popup -->
+<div id="donate-popup" class="popup">
+  <button class="close-btn" onclick="closePopup('donate-popup')">X</button>
+  <h3>Donation Form</h3>
+  <input type="text" id="donorName" placeholder="Your Name">
+  <input type="email" id="donorEmail" placeholder="Your Email">
+  <input type="number" id="donationAmount" placeholder="Donation Amount (₹)">
+  <textarea id="donorReason" rows="3" placeholder="Why are you helping?"></textarea>
+  <button onclick="showQR()">Proceed to Pay</button>
+</div>
 
-  <section id="map">
-    <h2>Flood-Affected Areas</h2>
-    <p>Red blinking circles represent areas under severe flood impact (Demo).</p>
-    <div class="map-container">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/3/38/India_map_blank_without_borders.svg" alt="India Map">
-      <div class="alert" style="top:30%;left:55%;"></div>
-      <div class="alert" style="top:50%;left:60%;"></div>
-      <div class="alert" style="top:45%;left:50%;"></div>
-      <div class="alert" style="top:40%;left:45%;"></div>
-      <div class="alert" style="top:55%;left:70%;"></div>
-    </div>
-  </section>
+<!-- QR Popup -->
+<div id="qr-popup" class="popup">
+  <button class="close-btn" onclick="closePopup('qr-popup')">X</button>
+  <h3>Scan to Donate</h3>
+  <p>Scan the below QR code to complete your donation.</p>
+  <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=DemoDonation" alt="QR Code">
+</div>
 
-  <section id="donate">
-    <h2>Donation Tracker (Demo)</h2>
-    <div class="tracker">
-      <h3>Total Raised: ₹<span id="total">0</span></h3>
-      <div class="progress-bar">
-        <div class="progress" id="progress"></div>
-      </div>
-      <div class="donation-feed" id="feed"></div>
-    </div>
-  </section>
+<!-- Survivor Popup -->
+<div id="survivor-popup" class="popup">
+  <button class="close-btn" onclick="closePopup('survivor-popup')">X</button>
+  <h3>Survivor Assistance Form</h3>
+  <input type="text" id="name" placeholder="Full Name">
+  <input type="text" id="location" placeholder="Location / District">
+  <textarea id="situation" rows="3" placeholder="Describe your situation"></textarea>
+  <input type="text" id="contact" placeholder="Contact Number">
+  <button onclick="alert('Your request has been submitted! Our volunteers will reach out soon.')">Submit</button>
+</div>
 
-  <section id="stories">
-    <h2>Survivor Stories</h2>
-    <div class="stories" id="storiesContainer">
-      <div class="story"><h4>Aman, Bihar</h4><p>Lost his house but not his hope. With donations, his family now has shelter.</p></div>
-      <div class="story"><h4>Rekha, Assam</h4><p>Floods washed away her crops, but support from volunteers helped restart farming.</p></div>
-      <div class="story"><h4>Ravi, Punjab</h4><p>Rebuilding his shop after floods — every contribution brings him closer to recovery.</p></div>
-      <div class="story"><h4>Meena, Odisha</h4><p>Received food kits and medical help in time, saving her family from hunger.</p></div>
-    </div>
-  </section>
+<!-- Map -->
+<section id="flood-map" class="map-section">
+  <h2>Flood Affected Areas</h2>
+  <div class="map-container">
+    <img src="india-map.png" alt="India Map" class="india-map" />
+    <div class="alert-zone zone1"></div>
+    <div class="alert-zone zone2"></div>
+    <div class="alert-zone zone3"></div>
+  </div>
+</section>
 
-  <footer>
-    Made with ❤️ at GNDU Hackathon | Demo Site | SurviveTogether © 2025
-  </footer>
+<footer>© 2025 SurviveTogether | Made with ❤️ at GNDU Hackathon</footer>
 
-  <script>
-    const feed = document.getElementById('feed');
-    const totalSpan = document.getElementById('total');
-    const progress = document.getElementById('progress');
-    let total = 0;
-    const names = ["Aman","Rekha","Ravi","Meena","Pooja","Sahil","Anita","Karan","Sita","Deepak"];
-    function simulateDonation() {
-      const donor = names[Math.floor(Math.random()*names.length)];
-      const amt = Math.floor(Math.random()*5000)+500;
-      total += amt;
-      totalSpan.textContent = total.toLocaleString();
-      progress.style.width = Math.min(total/1000,100) + "%";
-      const msg = document.createElement('div');
-      msg.textContent = `💖 ₹${amt} donated by ${donor} — allocated to survivors`;
-      feed.prepend(msg);
-    }
-    // auto donations every 5s
-    setInterval(simulateDonation, 5000);
+<script>
+  function openDonateForm() {
+    document.getElementById("donate-popup").style.display = "block";
+  }
 
-    // animate story cards
-    const stories = document.querySelectorAll('.story');
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry=>{
-        if(entry.isIntersecting) entry.target.classList.add('visible');
-      });
-    },{threshold:0.3});
-    stories.forEach(story=>observer.observe(story));
-  </script>
+  function openSurvivorForm() {
+    document.getElementById("survivor-popup").style.display = "block";
+  }
 
+  function closePopup(id) {
+    document.getElementById(id).style.display = "none";
+  }
+
+  function showQR() {
+    document.getElementById("donate-popup").style.display = "none";
+    document.getElementById("qr-popup").style.display = "block";
+  }
+</script>
 </body>
 </html>
