@@ -103,7 +103,7 @@
         
         /* Loading spinner */
         .spinner {
-            border: 2px solid rgba(0, 0, 0, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3); /* Lighter border for contrast */
             border-left-color: #fff;
             border-radius: 50%;
             width: 16px;
@@ -125,7 +125,8 @@
         }
 
         .dark .spinner {
-            border-left-color: #ddd;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-left-color: #ddd; /* Match text color */
         }
         @keyframes spin {
             0% { transform: rotate(0deg); }
@@ -183,17 +184,22 @@
             box-shadow: 0 0 15px rgba(0,0,0,0.3);
         }
 
-        /* Style form inputs for dark mode */
-        .form-input {
-            @apply mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm text-lg;
-            @apply focus:ring-blue-500 focus:border-blue-500;
-            @apply dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400;
+        /* Style form inputs for dark mode - Enhanced */
+        .form-input, .form-select {
+             @apply mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm text-base; /* Use text-base, consistent rounded-lg */
+             @apply focus:ring-blue-500 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-1 dark:focus:ring-offset-gray-900; /* Better focus */
+             @apply dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400;
+             @apply transition duration-150 ease-in-out; /* Smooth transition */
+             @apply focus:bg-gray-50 dark:focus:bg-gray-700; /* Subtle focus bg */
         }
         .form-select {
-            @apply mt-1 block w-full px-4 py-3 border border-gray-300 bg-white rounded-md shadow-sm text-lg;
-            @apply focus:ring-blue-500 focus:border-blue-500;
-            @apply dark:bg-gray-700 dark:border-gray-600 dark:text-white;
+             @apply bg-white dark:bg-gray-700; /* Ensure select bg is set */
+             /* Add arrow styling if needed */
         }
+        textarea.form-input {
+             min-height: 100px; /* Ensure textarea has decent height */
+        }
+
 
         /* Helper to hide pages */
         .page-hidden {
@@ -254,6 +260,17 @@
              @apply block mt-auto pt-4 border-t border-gray-200 dark:border-gray-700;
              @apply text-blue-600 dark:text-blue-400 font-medium hover:underline;
          }
+
+         /* Style for AI-generated message/ideas boxes */
+         #hopeMessage, #volunteerIdeas {
+             @apply mt-4 p-4 rounded-lg text-left text-base;
+             @apply bg-blue-50 dark:bg-gray-700 text-blue-800 dark:text-blue-200; /* Default blue for hope */
+             transition: background-color 0.3s ease;
+         }
+         #volunteerIdeas {
+              @apply bg-green-50 dark:bg-gray-700 text-green-800 dark:text-green-200 list-disc list-inside space-y-1 pl-6; /* Green for volunteer ideas */
+         }
+
 
     </style>
 </head>
@@ -498,7 +515,7 @@
                 </div>
             </section>
 
-            <!-- NEW: Live News & Updates Section -->
+            <!-- Live News & Updates Section -->
             <section id="news" class="mt-20 pt-16 text-center">
                 <h3 class="text-4xl font-bold text-gray-800 dark:text-gray-100 mb-6">Live News & Updates</h3>
                 <p class="text-xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto mb-8">
@@ -530,25 +547,27 @@
     <!-- Sufferer Page -->
     <div id="sufferer-page" class="page-hidden container mx-auto px-6 py-12 min-h-screen">
         <button class="back-to-home-btn text-blue-600 dark:text-blue-400 font-medium mb-8 hover:underline">&larr; Back to Home</button>
-        <div id="sufferer-form-container" class="max-w-lg mx-auto bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg">
-            <h3 class="text-3xl font-semibold text-gray-800 dark:text-gray-100 mb-6">Sufferer Assistance</h3>
+        <!-- Increased padding, added lg:max-w-xl for slightly wider on large screens -->
+        <div id="sufferer-form-container" class="max-w-lg lg:max-w-xl mx-auto bg-white dark:bg-gray-800 p-10 rounded-lg shadow-lg">
+            <h3 class="text-3xl font-semibold text-gray-800 dark:text-gray-100 mb-8">Sufferer Assistance</h3> <!-- Increased margin-bottom -->
             <form id="sufferer-form">
-                <p class="text-gray-600 dark:text-gray-300 mb-6 text-lg">Please let us know what you need. All information is confidential.</p>
-                <div class="space-y-4">
+                <p class="text-gray-600 dark:text-gray-300 mb-8 text-lg">Please let us know what you need. All information is confidential.</p> <!-- Increased margin-bottom -->
+                <div class="space-y-6"> <!-- Increased spacing -->
                     <div>
-                        <label for="name" class="block text-lg font-medium text-gray-700 dark:text-gray-200">Full Name</label>
-                        <input type="text" id="name" name="name" required class="form-input">
+                        <!-- Label styling -->
+                        <label for="sufferer-name" class="block text-lg font-semibold text-gray-700 dark:text-gray-200">Full Name</label>
+                        <input type="text" id="sufferer-name" name="name" required class="form-input">
                     </div>
                     <div>
-                        <label for="email" class="block text-lg font-medium text-gray-700 dark:text-gray-200">Email Address</label>
-                        <input type="email" id="email" name="email" required class="form-input">
+                        <label for="sufferer-email" class="block text-lg font-semibold text-gray-700 dark:text-gray-200">Email Address</label>
+                        <input type="email" id="sufferer-email" name="email" required class="form-input">
                     </div>
                     <div>
-                        <label for="phone" class="block text-lg font-medium text-gray-700 dark:text-gray-200">Phone Number</label>
-                        <input type="tel" id="phone" name="phone" class="form-input">
+                        <label for="sufferer-phone" class="block text-lg font-semibold text-gray-700 dark:text-gray-200">Phone Number</label>
+                        <input type="tel" id="sufferer-phone" name="phone" class="form-input">
                     </div>
                     <div>
-                        <label for="needs" class="block text-lg font-medium text-gray-700 dark:text-gray-200">What do you need help with?</label>
+                        <label for="needs" class="block text-lg font-semibold text-gray-700 dark:text-gray-200">What do you need help with?</label>
                         <select id="needs" name="needs" class="form-select">
                             <option>Food / Groceries</option>
                             <option>Shelter</option>
@@ -558,25 +577,29 @@
                         </select>
                     </div>
                     <div>
-                        <div class="flex justify-between items-center">
-                            <label for="details" class="block text-lg font-medium text-gray-700 dark:text-gray-200">Additional Details</label>
-                            <button type="button" id="suggestDetailsBtn" class="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium">✨ Help Me List My Needs</button>
+                        <div class="flex justify-between items-center mb-1"> <!-- Added margin-bottom -->
+                            <label for="details" class="block text-lg font-semibold text-gray-700 dark:text-gray-200">Additional Details</label>
+                             <!-- Secondary Button Styling -->
+                            <button type="button" id="suggestDetailsBtn" class="px-3 py-1 text-sm font-medium text-blue-700 bg-blue-100 rounded-full hover:bg-blue-200 dark:bg-blue-900 dark:text-blue-300 dark:hover:bg-blue-800 transition-colors">✨ Help Me List</button>
                         </div>
                         <textarea id="details" name="details" rows="4" class="form-input" placeholder="Be as specific as possible..."></textarea>
                     </div>
-                    <div class="pt-2 text-center">
-                        <button type="button" id="getHopeBtn" class="w-full bg-gray-100 dark:bg-gray-700 text-blue-700 dark:text-blue-300 py-2 px-4 rounded-lg text-md font-medium hover:bg-gray-200 dark:hover:bg-gray-600 transition duration-300 border border-blue-200 dark:border-blue-800">✨ Get a Hopeful Message</button>
-                        <div id="hopeMessage" class="mt-4 p-4 bg-blue-50 dark:bg-gray-700 text-blue-800 dark:text-blue-200 rounded-lg hidden text-left font-medium"></div>
+                    <div class="pt-2 text-center space-y-3"> <!-- Added space-y for button and message -->
+                         <!-- Secondary Button Styling -->
+                        <button type="button" id="getHopeBtn" class="w-full px-4 py-2 text-md font-medium text-blue-700 bg-blue-100 rounded-lg border border-blue-200 hover:bg-blue-200 dark:bg-blue-900 dark:text-blue-300 dark:border-blue-700 dark:hover:bg-blue-800 transition-colors">✨ Get a Hopeful Message</button>
+                        <div id="hopeMessage" class="hidden"></div> <!-- Styling applied via JS/CSS -->
                     </div>
-                    <div class="pt-2">
-                        <button type="submit" class="w-full bg-blue-600 text-white py-3 px-6 rounded-lg text-lg font-medium hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 transition duration-300">
+                    <div class="pt-4"> <!-- Increased top padding -->
+                        <!-- Primary Button Styling -->
+                        <button type="submit" class="w-full bg-blue-600 text-white py-3 px-6 rounded-lg text-lg font-semibold shadow hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 transition duration-300 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800">
                             Submit Request
                         </button>
                     </div>
                 </div>
             </form>
         </div>
-        <div id="sufferer-success" class="page-hidden text-center max-w-lg mx-auto bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg mt-8">
+        <!-- Success message styling remains the same -->
+        <div id="sufferer-success" class="page-hidden text-center max-w-lg lg:max-w-xl mx-auto bg-white dark:bg-gray-800 p-10 rounded-lg shadow-lg mt-8">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 text-green-500 mx-auto mb-4" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
             </svg>
@@ -591,25 +614,26 @@
     <!-- Volunteer Page -->
     <div id="volunteer-page" class="page-hidden container mx-auto px-6 py-12 min-h-screen">
         <button class="back-to-home-btn text-blue-600 dark:text-blue-400 font-medium mb-8 hover:underline">&larr; Back to Home</button>
-        <div id="volunteer-form-container" class="max-w-lg mx-auto bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg">
-            <h3 class="text-3xl font-semibold text-gray-800 dark:text-gray-100 mb-6">Volunteer Support</h3>
+         <!-- Increased padding, added lg:max-w-xl for slightly wider on large screens -->
+        <div id="volunteer-form-container" class="max-w-lg lg:max-w-xl mx-auto bg-white dark:bg-gray-800 p-10 rounded-lg shadow-lg">
+            <h3 class="text-3xl font-semibold text-gray-800 dark:text-gray-100 mb-8">Volunteer Support</h3> <!-- Increased margin-bottom -->
             <form id="volunteer-form">
-                <p class="text-gray-600 dark:text-gray-300 mb-6 text-lg">Thank you for your kindness. Please let us know how you can help.</p>
-                <div class="space-y-4">
+                <p class="text-gray-600 dark:text-gray-300 mb-8 text-lg">Thank you for your kindness. Please let us know how you can help.</p> <!-- Increased margin-bottom -->
+                <div class="space-y-6"> <!-- Increased spacing -->
                     <div>
-                        <label for="name-vol" class="block text-lg font-medium text-gray-700 dark:text-gray-200">Full Name</label>
+                        <label for="name-vol" class="block text-lg font-semibold text-gray-700 dark:text-gray-200">Full Name</label>
                         <input type="text" id="name-vol" name="name" required class="form-input">
                     </div>
                     <div>
-                        <label for="email-vol" class="block text-lg font-medium text-gray-700 dark:text-gray-200">Email Address</label>
+                        <label for="email-vol" class="block text-lg font-semibold text-gray-700 dark:text-gray-200">Email Address</label>
                         <input type="email" id="email-vol" name="email" required class="form-input">
                     </div>
                     <div>
-                        <label for="phone-vol" class="block text-lg font-medium text-gray-700 dark:text-gray-200">Phone Number</label>
+                        <label for="phone-vol" class="block text-lg font-semibold text-gray-700 dark:text-gray-200">Phone Number</label>
                         <input type="tel" id="phone-vol" name="phone" class="form-input">
                     </div>
                     <div>
-                        <label for="offerings" class="block text-lg font-medium text-gray-700 dark:text-gray-200">What can you offer?</label>
+                        <label for="offerings" class="block text-lg font-semibold text-gray-700 dark:text-gray-200">What can you offer?</label>
                         <select id="offerings" name="offerings" class="form-select">
                             <option>Volunteer Time</option>
                             <option>Donations (Money)</option>
@@ -618,23 +642,27 @@
                             <option>Other</option>
                         </select>
                     </div>
-                    <div id="volunteerIdeasContainer" class="hidden space-y-2">
-                        <button type="button" id="getVolunteerIdeasBtn" class="w-full bg-gray-100 dark:bg-gray-700 text-green-700 dark:text-green-300 py-2 px-4 rounded-lg text-md font-medium hover:bg-gray-200 dark:hover:bg-gray-600 transition duration-300 border border-green-200 dark:border-green-800">✨ Get Volunteer Ideas</button>
-                        <ul id="volunteerIdeas" class="mt-4 p-4 bg-green-50 dark:bg-gray-700 text-green-800 dark:text-green-200 rounded-lg hidden text-left font-medium list-disc list-inside space-y-1"></ul>
+                    <!-- Container for conditional button and list -->
+                    <div id="volunteerIdeasContainer" class="hidden space-y-3 pt-2">
+                        <!-- Secondary Button Styling -->
+                        <button type="button" id="getVolunteerIdeasBtn" class="w-full px-4 py-2 text-md font-medium text-green-700 bg-green-100 rounded-lg border border-green-200 hover:bg-green-200 dark:bg-green-900 dark:text-green-300 dark:border-green-700 dark:hover:bg-green-800 transition-colors">✨ Get Volunteer Ideas</button>
+                        <ul id="volunteerIdeas" class="hidden"></ul> <!-- Styling applied via JS/CSS -->
                     </div>
                     <div>
-                        <label for="availability" class="block text-lg font-medium text-gray-700 dark:text-gray-200">Availability / Details</label>
+                        <label for="availability" class="block text-lg font-semibold text-gray-700 dark:text-gray-200">Availability / Details</label>
                         <input type="text" id="availability" name="availability" placeholder="e.g., Weekends, Evenings, or specific goods" class="form-input">
                     </div>
-                    <div class="pt-2">
-                        <button type="submit" class="w-full bg-green-600 text-white py-3 px-6 rounded-lg text-lg font-medium hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600 transition duration-300">
+                    <div class="pt-4"> <!-- Increased top padding -->
+                         <!-- Primary Button Styling -->
+                        <button type="submit" class="w-full bg-green-600 text-white py-3 px-6 rounded-lg text-lg font-semibold shadow hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600 transition duration-300 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800">
                             Submit Offer
                         </button>
                     </div>
                 </div>
             </form>
         </div>
-        <div id="volunteer-success-generic" class="page-hidden text-center max-w-lg mx-auto bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg mt-8">
+        <!-- Success messages styling remains the same -->
+        <div id="volunteer-success-generic" class="page-hidden text-center max-w-lg lg:max-w-xl mx-auto bg-white dark:bg-gray-800 p-10 rounded-lg shadow-lg mt-8">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 text-green-500 mx-auto mb-4" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
             </svg>
@@ -644,7 +672,7 @@
                 Done
             </button>
         </div>
-        <div id="volunteer-success-qr" class="page-hidden text-center max-w-lg mx-auto bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg mt-8">
+        <div id="volunteer-success-qr" class="page-hidden text-center max-w-lg lg:max-w-xl mx-auto bg-white dark:bg-gray-800 p-10 rounded-lg shadow-lg mt-8">
             <h4 class="text-3xl font-semibold text-gray-800 dark:text-gray-100 mb-4">Complete Your Donation</h4>
             <p class="text-lg text-gray-600 dark:text-gray-300 mb-6">Thank you for your generosity! Please scan the QR code below with your payment app to complete the donation.</p>
             <img id="qrCodeImg-vol" src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=SurviveTogether-Donation" alt="QR Code for Donation" class="mx-auto my-4 border-4 border-gray-200 dark:border-gray-600 rounded-lg bg-white">
@@ -711,14 +739,18 @@
          * Shows a loading state on a button
          */
         function showLoading(button, isLoading, originalText = '✨ Generate') {
+            if (!button) return; // Add check if button exists
             if (isLoading) {
                 button.disabled = true;
-                button.innerHTML = `<div class="flex items-center justify-center space-x-2">
+                // Add fixed height/width to prevent layout shift
+                button.style.minHeight = button.offsetHeight + 'px';
+                button.innerHTML = `<div class="flex items-center justify-center space-x-2 h-full">
                                         <div class="spinner"></div>
                                         <span>Loading...</span>
                                     </div>`;
             } else {
                 button.disabled = false;
+                button.style.minHeight = ''; // Remove fixed height
                 button.innerHTML = originalText;
             }
         }
@@ -751,21 +783,33 @@
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(payload)
                     });
-                    // FIX: Check for 401 specifically
-                    if (response.status === 401) {
-                        console.error("API Error Response: 401 Unauthorized. Check API key/permissions.");
-                        throw new Error(`API Error: 401`); // Throw specific error
-                    }
+                    
                     if (!response.ok) {
-                        console.error("API Error Response:", await response.text());
+                        const errorBody = await response.text();
+                        console.error(`API Error Response (Status ${response.status}):`, errorBody);
+                        if (response.status === 401) throw new Error(`API Error: 401 Unauthorized`);
+                        if (response.status === 403) throw new Error(`API Error: 403 Forbidden`);
+                        if (response.status === 429) throw new Error(`API Error: 429 Too Many Requests`); // Handle rate limiting
                         throw new Error(`API Error: ${response.status}`);
                     }
                     
                     const result = await response.json();
+                    
                     const candidate = result.candidates?.[0];
-                    const part = candidate?.content?.parts?.[0];
+                    if (!candidate) {
+                        if (result.promptFeedback?.blockReason) throw new Error(`API blocked: ${result.promptFeedback.blockReason}`);
+                        if (candidate?.finishReason && candidate.finishReason !== 'STOP') throw new Error(`API finished unexpectedly: ${candidate.finishReason}`);
+                        console.error("No candidate found in response:", result);
+                        throw new Error("No candidate found in API response.");
+                    }
 
-                    if (part && part.text) {
+                    const part = candidate.content?.parts?.[0];
+                     if (!part || typeof part.text === 'undefined') {
+                         console.error("No text part found in candidate:", candidate);
+                         throw new Error("Missing text part in API response.");
+                     }
+
+                    if (part.text) {
                         if (jsonSchema) {
                             try {
                                 return JSON.parse(part.text);
@@ -776,26 +820,27 @@
                         }
                         return part.text; // Return plain text
                     } else {
-                         if (result.promptFeedback && result.promptFeedback.blockReason) {
-                            console.error("API request blocked:", result.promptFeedback.blockReason);
-                             throw new Error(`API request blocked: ${result.promptFeedback.blockReason}`);
-                         }
-                        console.error("Invalid response structure:", result);
-                        throw new Error("Invalid response structure from API.");
+                        console.error("Unexpected empty text part:", part);
+                        throw new Error("Empty text part received from API.");
                     }
                 } catch (error) {
                     console.error(`Attempt ${i + 1} failed:`, error);
                     if (i === maxRetries - 1) {
-                        // FIX: Return error message indicating the specific issue if possible
-                        const finalErrorMessage = error.message.includes('401') 
+                         const finalErrorMessage = error.message.includes('401') 
                             ? "Authorization Error (401). Could not connect to AI service."
-                            : `API request failed: ${error.message}`;
+                             : error.message.includes('429')
+                             ? "Rate limit exceeded. Please try again later."
+                            : `API request failed after multiple retries: ${error.message}`;
                         return jsonSchema ? { error: finalErrorMessage } : `Sorry, I couldn't get a response right now. ${finalErrorMessage}`;
                     }
-                    await new Promise(resolve => setTimeout(resolve, delay));
-                    delay *= 2;
+                    // Implement exponential backoff with jitter
+                    const jitter = Math.random() * 500; // Add up to 0.5s jitter
+                    await new Promise(resolve => setTimeout(resolve, delay + jitter));
+                    delay *= 2; // Double the delay for next retry
                 }
             }
+             // Fallback return if loop completes unexpectedly
+             return jsonSchema ? { error: "API request failed unexpectedly." } : "Sorry, the request failed unexpectedly.";
         }
 
 
@@ -803,6 +848,7 @@
          * Animates a number counting up
          */
         function animateCountUp(element, endValue, duration = 1500) {
+            if (!element) return; // Add check
             const startValue = parseInt(element.innerText.replace(/₹|,/g, '')) || 0;
             const change = endValue - startValue;
             let startTime = null;
@@ -810,9 +856,9 @@
             function step(timestamp) {
                 if (!startTime) startTime = timestamp;
                 const progress = Math.min((timestamp - startTime) / duration, 1);
-                const easedProgress = progress * (2 - progress);
+                const easedProgress = 1 - Math.pow(1 - progress, 3); // Cubic ease-out
                 const currentValue = Math.floor(easedProgress * change + startValue);
-                element.innerText = `₹${currentValue.toLocaleString('en-IN')}`;
+                if (element) element.innerText = `₹${currentValue.toLocaleString('en-IN')}`;
                 if (progress < 1) requestAnimationFrame(step);
             }
             requestAnimationFrame(step);
@@ -823,30 +869,43 @@
          */
         const updateDonationTracker = (donationAmount, useAnimation = true) => {
             const newTotal = currentAmountRaised + donationAmount;
-            if (useAnimation) {
-                animateCountUp(amountRaisedText, newTotal, 1500);
-            } else {
-                amountRaisedText.innerText = `₹${newTotal.toLocaleString('en-IN')}`;
+            if (amountRaisedText) { // Check if element exists
+                 if (useAnimation) {
+                    animateCountUp(amountRaisedText, newTotal, 1500);
+                } else {
+                    amountRaisedText.innerText = `₹${newTotal.toLocaleString('en-IN')}`;
+                }
             }
+           
             const newPercentage = (newTotal / internalGoal) * 100;
-            progressBarFill.style.width = `${Math.min(newPercentage, 100)}%`;
-            progressBarFill.setAttribute('aria-valuenow', newPercentage);
+            if (progressBarFill) { // Check if element exists
+                 progressBarFill.style.width = `${Math.min(newPercentage, 100)}%`;
+                 progressBarFill.setAttribute('aria-valuenow', newPercentage);
+            }
+           
             currentAmountRaised = newTotal;
-            donationStatusText.innerText = "Increasing...";
-            donationStatusText.classList.add('text-green-600', 'dark:text-green-400');
-            setTimeout(() => {
-                donationStatusText.innerText = "Your support is invaluable!";
-                donationStatusText.classList.remove('text-green-600', 'dark:text-green-400');
-            }, 2000);
+            if (donationStatusText) { // Check if element exists
+                donationStatusText.innerText = "Increasing...";
+                donationStatusText.classList.add('text-green-600', 'dark:text-green-400');
+                setTimeout(() => {
+                    if (donationStatusText) { // Check again inside timeout
+                         donationStatusText.innerText = "Your support is invaluable!";
+                         donationStatusText.classList.remove('text-green-600', 'dark:text-green-400');
+                    }
+                }, 2000);
+            }
+            
         };
 
         /**
          * Shows a page by ID and hides others
          */
         function showPage(pageId) {
-            homePage.classList.add('page-hidden');
-            suffererPage.classList.add('page-hidden');
-            volunteerPage.classList.add('page-hidden');
+            // Add checks for page elements
+            if (homePage) homePage.classList.add('page-hidden');
+            if (suffererPage) suffererPage.classList.add('page-hidden');
+            if (volunteerPage) volunteerPage.classList.add('page-hidden');
+            
             const targetPage = document.getElementById(pageId);
             if (targetPage) targetPage.classList.remove('page-hidden');
             window.scrollTo(0, 0);
@@ -857,16 +916,21 @@
          */
         function goToHome() {
             showPage('home-page');
-            suffererForm.reset();
-            suffererFormContainer.style.display = 'block';
-            suffererSuccess.style.display = 'none';
-            document.getElementById('hopeMessage').classList.add('hidden');
-            volunteerForm.reset();
-            volunteerFormContainer.style.display = 'block';
-            volunteerSuccessGeneric.style.display = 'none';
-            volunteerSuccessQr.style.display = 'none';
-            document.getElementById('volunteerIdeasContainer').classList.add('hidden');
-            document.getElementById('volunteerIdeas').classList.add('hidden');
+            // Add checks before resetting/modifying elements
+            if (suffererForm) suffererForm.reset();
+            if (suffererFormContainer) suffererFormContainer.style.display = 'block';
+            if (suffererSuccess) suffererSuccess.style.display = 'none';
+            const hopeMsg = document.getElementById('hopeMessage');
+            if (hopeMsg) hopeMsg.classList.add('hidden');
+            
+            if (volunteerForm) volunteerForm.reset();
+            if (volunteerFormContainer) volunteerFormContainer.style.display = 'block';
+            if (volunteerSuccessGeneric) volunteerSuccessGeneric.style.display = 'none';
+            if (volunteerSuccessQr) volunteerSuccessQr.style.display = 'none';
+            const volIdeasCont = document.getElementById('volunteerIdeasContainer');
+            if (volIdeasCont) volIdeasCont.classList.add('hidden');
+            const volIdeas = document.getElementById('volunteerIdeas');
+            if (volIdeas) volIdeas.classList.add('hidden');
         }
 
         
@@ -889,45 +953,40 @@
             darkTileLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
             });
-            if (!document.getElementById('map') || map) return; // Prevent re-initialization
-            map = L.map('map').setView([20.5937, 78.9629], 4); // Zoom out a bit
-            if (isDarkMode) {
-                darkTileLayer.addTo(map);
-            } else {
-                lightTileLayer.addTo(map);
+            
+            const mapElement = document.getElementById('map');
+            if (!mapElement || map) return; // Prevent re-initialization if no element or map exists
+
+            try {
+                 map = L.map('map').setView([20.5937, 78.9629], 4); // Zoom out a bit
+                 if (isDarkMode) {
+                    darkTileLayer.addTo(map);
+                } else {
+                    lightTileLayer.addTo(map);
+                }
+
+                // --- USE FAKE DATA ---
+                console.log("Using fake map data due to potential browser restrictions.");
+                fakeAffectedAreas.forEach(area => {
+                    const color = area.level === 'High' ? 'red' : (area.level === 'Medium' ? 'orange' : 'yellow');
+                    
+                    L.circle([area.lat, area.lng], {
+                        color: color,
+                        fillColor: color,
+                        fillOpacity: 0.4,
+                        radius: area.level === 'High' ? 80000 : 50000
+                    }).addTo(map)
+                      .bindPopup(`
+                        <strong style="color: ${color};">${area.name}</strong><br>
+                        <strong>Alert Level:</strong> ${area.level}<br>
+                        <p>${area.details}</p>
+                      `);
+                });
+                // --- END FAKE DATA USAGE ---
+            } catch (e) {
+                console.error("Leaflet map initialization failed:", e);
+                if(mapElement) mapElement.innerHTML = "<p class='text-red-500 p-4'>Error initializing map.</p>";
             }
-
-            // --- USE FAKE DATA ---
-            console.log("Using fake map data due to potential browser restrictions.");
-            fakeAffectedAreas.forEach(area => {
-                const color = area.level === 'High' ? 'red' : (area.level === 'Medium' ? 'orange' : 'yellow');
-                
-                L.circle([area.lat, area.lng], {
-                    color: color,
-                    fillColor: color,
-                    fillOpacity: 0.4,
-                    radius: area.level === 'High' ? 80000 : 50000
-                }).addTo(map)
-                  .bindPopup(`
-                    <strong style="color: ${color};">${area.name}</strong><br>
-                    <strong>Alert Level:</strong> ${area.level}<br>
-                    <p>${area.details}</p>
-                  `);
-            });
-            // --- END FAKE DATA USAGE ---
-
-            /* --- COMMENTED OUT: NASA EONET API Call (potential CORS issue) ---
-            const eonetApiUrl = 'https://eonet.sci.gsfc.nasa.gov/api/v3/events?status=open&category=severeStorms,floods,wildfires';
-            fetch(eonetApiUrl)
-                .then(response => response.json())
-                .then(data => {
-                     // ... processing logic ...
-                })
-                .catch(error => {
-                     console.error("Error fetching NASA EONET data:", error);
-                     // Optionally display a message to the user here
-                 });
-            */
         }
         
         /**
@@ -935,13 +994,18 @@
          */
         function switchMapTheme(isDarkMode) {
             if (!map) return;
-            if (isDarkMode) {
-                if (map.hasLayer(lightTileLayer)) map.removeLayer(lightTileLayer);
-                if (!map.hasLayer(darkTileLayer)) map.addLayer(darkTileLayer);
-            } else {
-                if (map.hasLayer(darkTileLayer)) map.removeLayer(darkTileLayer);
-                if (!map.hasLayer(lightTileLayer)) map.addLayer(lightTileLayer);
+            try {
+                 if (isDarkMode) {
+                    if (map.hasLayer(lightTileLayer)) map.removeLayer(lightTileLayer);
+                    if (!map.hasLayer(darkTileLayer)) map.addLayer(darkTileLayer);
+                } else {
+                    if (map.hasLayer(darkTileLayer)) map.removeLayer(darkTileLayer);
+                    if (!map.hasLayer(lightTileLayer)) map.addLayer(lightTileLayer);
+                }
+            } catch(e) {
+                console.error("Error switching map theme:", e);
             }
+           
         }
 
 
@@ -953,7 +1017,10 @@
             li.className = 'text-base font-medium text-gray-700 dark:text-gray-300';
             li.innerHTML = `${message} ${icon}`;
             list.prepend(li);
-            if (list.children.length > 20) list.lastChild.remove();
+            // Limit list length for performance
+            while (list.children.length > 20) {
+                 list.removeChild(list.lastChild);
+            }
         }
 
         // --- Fake Notification Toast Logic ---
@@ -962,8 +1029,12 @@
         const toastMessage = document.getElementById('toast-message');
         const randomNames = ["Ravi K.", "Meena S.", "Sonal G.", "Amit B.", "Priya V.", "Raj M.", "Sunita P.", "Vikram R.", "Anjali D.", "Karan N.", "Pooja T."];
         const randomEmojis = ['❤️', '🙌', '✨', '🙏', '🎉', '🧡', '💛'];
+        let toastTimeout; // To manage hiding animation
 
         function showToast() {
+            // Check if elements exist
+            if (!toast || !toastIcon || !toastMessage) return;
+
             const randomName = randomNames[Math.floor(Math.random() * randomNames.length)];
             const randomEmoji = randomEmojis[Math.floor(Math.random() * randomEmojis.length)];
             let message = '';
@@ -980,11 +1051,19 @@
             
             toastIcon.innerHTML = icon;
             toastMessage.innerHTML = message;
+            
+            // Clear any existing timeout to prevent premature hiding
+            clearTimeout(toastTimeout);
+            
             toast.classList.add('show');
-            addRecentDonation(message, icon);
-            setTimeout(() => { toast.classList.remove('show'); }, 5000);
+            addRecentDonation(message, icon); // Add to list as well
+
+            // Set timeout to hide after 5 seconds
+            toastTimeout = setTimeout(() => { 
+                if (toast) toast.classList.remove('show'); 
+            }, 5000);
         }
-        setInterval(showToast, 12000);
+        setInterval(showToast, 12000); // Show every 12 seconds
         // --- End Fake Notification Toast Logic ---
         
         // --- Theme Toggle Logic ---
@@ -993,6 +1072,8 @@
         const sunIcon = document.getElementById('theme-icon-sun');
 
         function updateThemeIcons(isDarkMode) {
+            // Add checks for icon elements
+            if (!moonIcon || !sunIcon) return;
             if (isDarkMode) {
                 moonIcon.classList.add('hidden');
                 sunIcon.classList.remove('hidden');
@@ -1001,23 +1082,22 @@
                 sunIcon.classList.add('hidden');
             }
         }
-        themeToggleBtn.addEventListener('click', () => {
-            const isDark = document.documentElement.classList.toggle('dark');
-            localStorage.theme = isDark ? 'dark' : 'light';
-            updateThemeIcons(isDark);
-            switchMapTheme(isDark);
-        });
+        if (themeToggleBtn) { // Add check for button
+            themeToggleBtn.addEventListener('click', () => {
+                const isDark = document.documentElement.classList.toggle('dark');
+                localStorage.theme = isDark ? 'dark' : 'light';
+                updateThemeIcons(isDark);
+                switchMapTheme(isDark);
+            });
+        }
+        
         
         // --- Rapid Auto-Increment for Live Counter ---
         function startRapidCounter() {
             setInterval(() => {
                 const randomMicroDonation = Math.floor(Math.random() * 101) + 100;
-                const newTotal = currentAmountRaised + randomMicroDonation;
-                amountRaisedText.innerText = `₹${newTotal.toLocaleString('en-IN')}`;
-                const newPercentage = (newTotal / internalGoal) * 100;
-                progressBarFill.style.width = `${Math.min(newPercentage, 100)}%`;
-                progressBarFill.setAttribute('aria-valuenow', newPercentage);
-                currentAmountRaised = newTotal;
+                // Directly call updateDonationTracker with animation disabled for the ticking effect
+                updateDonationTracker(randomMicroDonation, false); 
             }, 2500);
         }
         // --- END: Rapid Auto-Increment ---
@@ -1025,15 +1105,22 @@
         // --- Hero Background Slider Logic ---
         function initHeroSlider() {
             let currentHeroSlide = 0;
-            const heroSlides = document.querySelectorAll('#hero-slider .hero-slide');
+            const heroSlider = document.getElementById('hero-slider');
+            if (!heroSlider) return; // Check if slider exists
+            const heroSlides = heroSlider.querySelectorAll('.hero-slide');
             const totalHeroSlides = heroSlides.length;
             if (totalHeroSlides === 0) return;
+            
             function cycleHeroSlides() {
-                const lastSlide = (currentHeroSlide - 1 + totalHeroSlides) % totalHeroSlides;
-                heroSlides[lastSlide].style.opacity = 0;
-                heroSlides[currentHeroSlide].style.opacity = 1;
+                const lastSlideIndex = (currentHeroSlide - 1 + totalHeroSlides) % totalHeroSlides;
+                 // Ensure slide elements exist before accessing style
+                 if (heroSlides[lastSlideIndex]) heroSlides[lastSlideIndex].style.opacity = 0;
+                 if (heroSlides[currentHeroSlide]) heroSlides[currentHeroSlide].style.opacity = 1;
+
                 currentHeroSlide = (currentHeroSlide + 1) % totalHeroSlides;
             }
+            // Ensure first slide is visible initially
+            if (heroSlides[0]) heroSlides[0].style.opacity = 1; 
             setInterval(cycleHeroSlides, 3000);
         }
         // --- END: Hero Background Slider Logic ---
@@ -1042,35 +1129,45 @@
         function initScrollSpy() {
             const sections = document.querySelectorAll('#home-page section[id]');
             const navLinks = document.querySelectorAll('.nav-link');
+            if (sections.length === 0 || navLinks.length === 0) return; // Exit if no sections or links
+
             const observer = new IntersectionObserver((entries) => {
-                let activeSectionId = 'home';
+                let activeSectionId = null;
                 
-                // Find the topmost visible section
-                for (const entry of entries) {
-                    if (entry.isIntersecting) {
-                         // A simple way to find the "highest" section on screen
-                         if (entry.boundingClientRect.top >= 0 && entry.boundingClientRect.top < (window.innerHeight / 2)) {
-                             activeSectionId = entry.target.id;
-                             break;
-                         }
+                 // Find the section that is most visible near the top quarter of the viewport
+                 entries.forEach(entry => {
+                    // Check if entry target exists and has an id
+                    if (entry.target && entry.target.id && entry.isIntersecting && entry.boundingClientRect.top < window.innerHeight / 4 && entry.boundingClientRect.bottom > 50) { // Added bottom check
+                         activeSectionId = entry.target.id;
                     }
-                }
-                 // Fallback for when at the top of the page
-                if (window.scrollY < 300) {
+                 });
+
+                 // Fallback if nothing is actively intersecting near the top or scrolled to top
+                 if (!activeSectionId && window.scrollY < 300) {
                      activeSectionId = 'home';
-                }
+                 } else if (!activeSectionId) {
+                     // If still null, find the first *currently intersecting* entry as a fallback
+                     const firstIntersecting = entries.find(e => e.isIntersecting);
+                     if (firstIntersecting && firstIntersecting.target && firstIntersecting.target.id) {
+                          activeSectionId = firstIntersecting.target.id;
+                     }
+                 }
+
 
                 navLinks.forEach(link => {
                     link.classList.remove('active-nav-link');
-                    if (link.dataset.section === activeSectionId) {
+                     // Use dataset.section which should match the section id
+                    if (activeSectionId && link.dataset.section === activeSectionId) {
                         link.classList.add('active-nav-link');
                     }
                 });
-            }, { threshold: 0.1, rootMargin: "-50% 0px -50% 0px" }); // Tweak thresholds for better accuracy
+            }, { threshold: [0.1, 0.5], rootMargin: "-10% 0px -60% 0px" }); // Adjust rootMargin
 
             sections.forEach(section => observer.observe(section));
-            // Set home as active on load
-            document.querySelector('.nav-link[data-section="home"]').classList.add('active-nav-link');
+            
+            // Set home as active on load initially
+            const homeLink = document.querySelector('.nav-link[data-section="home"]');
+            if (homeLink) homeLink.classList.add('active-nav-link');
         }
         // --- END: Active Nav Link Scroll Spy ---
 
@@ -1086,5 +1183,350 @@
                 { id: 'weather-delhi', lat: 28.61, lon: 77.21 }
             ];
             for (const loc of locations) {
-                const weatherUrl = `https://api.
+                // Use HTTPS for API call
+                const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${loc.lat}&longitude=${loc.lon}&current_weather=true`;
+                const container = document.getElementById(loc.id);
+                if (!container) continue; // Skip if container not found
+                try {
+                    const response = await fetch(weatherUrl);
+                    if (!response.ok) throw new Error(`Weather fetch failed: ${response.status}`);
+                    const data = await response.json();
+                    const weather = data.current_weather;
+                    // Check if weather data exists
+                     if (weather && typeof weather.temperature !== 'undefined' && typeof weather.weathercode !== 'undefined') {
+                        container.innerHTML = `<div class="text-5xl mb-2">${getWeatherEmoji(weather.weathercode)}</div><div class="text-3xl font-bold">${weather.temperature}°C</div>`;
+                    } else {
+                         throw new Error("Invalid weather data structure received.");
+                    }
+                   
+                } catch (error) {
+                    console.error("Error fetching weather for " + loc.id + ":", error);
+                    container.innerHTML = `<p class="text-gray-500">Could not load weather</p>`;
+                }
+            }
+        }
+        // --- END: Weather API Logic ---
+
+        // --- Quote API Logic - REVERTED TO STATIC QUOTES ---
+        const staticQuotes = [
+            { content: "The best way to find yourself is to lose yourself in the service of others.", author: "Mahatma Gandhi" },
+            { content: "Hope is being able to see that there is light despite all of the darkness.", author: "Desmond Tutu" },
+            { content: "In the middle of difficulty lies opportunity.", author: "Albert Einstein" },
+            { content: "We cannot help everyone, but everyone can help someone.", author: "Ronald Reagan" },
+            { content: "Tough times never last, but tough people do.", author: "Robert H. Schuller" }
+        ];
+        let currentQuoteIndex = 0;
+
+        function displayStaticQuote() {
+            const quoteLoading = document.getElementById('quote-loading');
+            const quoteContent = document.getElementById('quote-content');
+            const quoteText = document.getElementById('quote-text');
+            const quoteAuthor = document.getElementById('quote-author');
+            const newQuoteBtn = document.getElementById('new-quote-btn');
+            
+            // Add checks for all elements
+            if (!quoteLoading || !quoteContent || !quoteText || !quoteAuthor || !newQuoteBtn) return;
+
+            const quote = staticQuotes[currentQuoteIndex];
+            quoteText.innerText = `"${quote.content}"`;
+            quoteAuthor.innerText = `- ${quote.author}`;
+            
+            quoteLoading.style.display = 'none'; // Ensure loading is hidden
+            quoteContent.classList.remove('hidden'); // Show content
+            newQuoteBtn.disabled = false; // Ensure button is enabled
+
+            currentQuoteIndex = (currentQuoteIndex + 1) % staticQuotes.length; // Cycle index
+        }
+        // --- END: Quote API Logic ---
+
+        // --- NEW: Live News API Logic ---
+        async function fetchNews() {
+            const getNewsBtn = document.getElementById('get-news-btn');
+            const newsContentArea = document.getElementById('news-content-area');
+            
+            // Add checks for elements
+            if (!getNewsBtn || !newsContentArea) return;
+
+            getNewsBtn.style.display = 'none'; // Hide button
+            newsContentArea.innerHTML = `<div class="flex justify-center items-center min-h-[200px]"><div class="loading-spinner-small"></div></div>`; // Show loading spinner
+            newsContentArea.className = 'min-h-[200px]'; // Reset grid
+
+            const prompt = "Fetch the top 4 latest news articles related to 'flood relief' and 'disaster response' in Punjab, India. Summarize each article concisely. Provide a headline, a 1-2 sentence summary, the source's title, and the direct URL for each.";
+            const systemInstruction = "You are a news aggregator. You must only return JSON formatted according to the schema. You must use your Google Search tool to find recent, relevant information. Do not return empty results.";
+            const schema = {
+                "type": "ARRAY",
+                "items": {
+                    "type": "OBJECT",
+                    "properties": {
+                        "headline": { "type": "STRING" },
+                        "summary": { "type": "STRING" },
+                        "sourceTitle": { "type": "STRING" },
+                        "url": { "type": "STRING" }
+                    },
+                    "required": ["headline", "summary", "sourceTitle", "url"]
+                }
+            };
+
+            try {
+                const newsArticles = await callGeminiAPI(prompt, systemInstruction, 3, schema, true); // true = useSearch
+                
+                // Enhanced Error Handling for 401 and other errors
+                const isAuthError = (typeof newsArticles === 'string' && newsArticles.includes('Authorization Error (401)')) || 
+                                   (newsArticles && newsArticles.error && newsArticles.error.includes('Authorization Error (401)'));
+                const isRateLimitError = (typeof newsArticles === 'string' && newsArticles.includes('Rate limit exceeded')) ||
+                                       (newsArticles && newsArticles.error && newsArticles.error.includes('Rate limit exceeded'));
+
+                if (isAuthError) {
+                     console.error("News fetch failed due to Authorization Error (401).");
+                     newsContentArea.innerHTML = `<p class="text-red-600 dark:text-red-400 font-semibold p-4">Error: Could not authorize connection to the AI service (Error 401). Live news cannot be fetched.</p>`;
+                     // Keep button hidden for 401
+                     return;
+                }
+                if (isRateLimitError) {
+                     console.error("News fetch failed due to Rate Limit Error.");
+                     newsContentArea.innerHTML = `<p class="text-yellow-600 dark:text-yellow-400 font-semibold p-4">Too many requests. Please wait a moment and try again.</p>`;
+                     getNewsBtn.style.display = 'block'; // Allow retry for rate limit
+                     return;
+                }
+
+                if (newsArticles.error || !Array.isArray(newsArticles) || newsArticles.length === 0) {
+                     console.error("News fetch failed or returned invalid/empty data:", newsArticles);
+                    newsContentArea.innerHTML = `<p class="text-gray-600 dark:text-gray-400 p-4">Could not retrieve live news at this time${newsArticles.error ? ': ' + newsArticles.error : ''}. Please try again later.</p>`;
+                    getNewsBtn.style.display = 'block'; // Show button again on general failure
+                    return;
+                }
+
+                // We have news! Build the cards
+                newsContentArea.innerHTML = ''; // Clear loading spinner
+                newsContentArea.className = 'grid grid-cols-1 md:grid-cols-2 gap-6 text-left'; // Set grid for cards
+
+                newsArticles.forEach(article => {
+                    // Basic check for expected properties
+                     if (!article.headline || !article.summary || !article.sourceTitle || !article.url) {
+                        console.warn("Skipping article with missing data:", article);
+                        return; // Skip this article
+                    }
+                    const card = document.createElement('div');
+                    card.className = 'bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden flex flex-col';
+                    // Sanitize potential HTML in API response (simple example)
+                    const safeHeadline = article.headline.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                    const safeSummary = article.summary.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                    const safeSource = article.sourceTitle.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+                    card.innerHTML = `
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h4 class="text-xl font-semibold mb-3 text-gray-900 dark:text-gray-100">${safeHeadline}</h4>
+                            <p class="text-base text-gray-600 dark:text-gray-300 mb-4 flex-grow">${safeSummary}</p>
+                            <a href="${article.url}" target="_blank" rel="noopener noreferrer" class="news-card-link">
+                                Read more at ${safeSource} &rarr;
+                            </a>
+                        </div>
+                    `;
+                    newsContentArea.appendChild(card);
+                });
+
+            } catch (error) { // Catch errors not handled by callGeminiAPI's internal loop (e.g., network issues)
+                console.error("Error in fetchNews execution:", error);
+                newsContentArea.innerHTML = `<p class="text-gray-600 dark:text-gray-400 p-4">An error occurred while fetching news.</p>`;
+                getNewsBtn.style.display = 'block';
+            }
+        }
+        // --- END: Live News API Logic ---
+
+
+        // Initialize everything on load
+        document.addEventListener('DOMContentLoaded', () => {
+            const isDark = document.documentElement.classList.contains('dark');
+            updateThemeIcons(isDark);
+            
+            // Check elements before accessing properties
+            if (progressBarFill && amountRaisedText) {
+                const initialPercentage = (currentAmountRaised / internalGoal) * 100;
+                progressBarFill.style.width = `${initialPercentage}%`;
+                progressBarFill.setAttribute('aria-valuenow', initialPercentage);
+                amountRaisedText.innerText = `₹${currentAmountRaised.toLocaleString('en-IN')}`;
+            }
+            
+            startRapidCounter();
+            initHeroSlider();
+            initMap(isDark);
+            initScrollSpy();
+
+            // API CALLS & Static Content
+            fetchWeather(); // Keep trying this one
+            displayStaticQuote(); // Display initial static quote
+            
+            // Event Listeners
+            const newQuoteBtn = document.getElementById('new-quote-btn');
+            if (newQuoteBtn) newQuoteBtn.addEventListener('click', displayStaticQuote); // Use static quote function
+            
+            const getNewsBtn = document.getElementById('get-news-btn');
+            if (getNewsBtn) getNewsBtn.addEventListener('click', fetchNews); // Add listener for news button
+
+            // Initialize recent donations list
+            const recentDonationsList = document.getElementById('recent-donations-list');
+            if (recentDonationsList) recentDonationsList.innerHTML = ''; // Clear
+            addRecentDonation("<b>Vikram R.</b> just donated ₹2,100!", "🧡");
+            addRecentDonation("<b>Priya V.</b> just donated ₹1,500!", "🙏");
+            addRecentDonation("<b>Amit B.</b> just donated ₹800!", "❤️");
+            setTimeout(showToast, 1500); // Show first toast after delay
+            
+            // --- Page Navigation Listeners ---
+             if (getHelpBtn) getHelpBtn.addEventListener('click', () => showPage('sufferer-page'));
+             if (offerHelpBtn) offerHelpBtn.addEventListener('click', () => showPage('volunteer-page'));
+             
+             document.querySelectorAll('.back-to-home-btn').forEach(btn => {
+                btn.addEventListener('click', goToHome);
+            });
+
+            document.querySelectorAll('#header-nav nav a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    const targetElement = document.querySelector(href); // Find target first
+
+                     if (!targetElement) { // If target doesn't exist, just go home
+                         e.preventDefault();
+                         goToHome();
+                         return;
+                     }
+
+                    if (homePage && homePage.classList.contains('page-hidden')) { // Navigate back to home first
+                        e.preventDefault();
+                        goToHome();
+                        // Use timeout to allow page switch before scrolling
+                        setTimeout(() => {
+                           targetElement.scrollIntoView({ behavior: 'smooth' });
+                        }, 50); // Small delay
+                    } else { // Already on home page
+                        e.preventDefault();
+                        if (href === '#home') {
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                        } else {
+                            targetElement.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    }
+                });
+            });
+
+            // --- Form Submission Listeners ---
+            if(suffererForm) {
+                 suffererForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    if(suffererFormContainer) suffererFormContainer.style.display = 'none';
+                    if(suffererSuccess) suffererSuccess.style.display = 'block';
+                });
+            }
+           
+            if(volunteerForm) {
+                 volunteerForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const offeringsSelect = document.getElementById('offerings');
+                    const isDonation = offeringsSelect && offeringsSelect.value === 'Donations (Money)';
+                    if(volunteerFormContainer) volunteerFormContainer.style.display = 'none';
+                    if (isDonation) {
+                        const randomData = `SurviveTogether-Donation-ID-${Math.random().toString(36).substring(7)}`;
+                        const volQrCodeImg = document.querySelector('#volunteer-success-qr img'); 
+                        if (volQrCodeImg) {
+                            volQrCodeImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(randomData)}`;
+                        }
+                         if(volunteerSuccessQr) volunteerSuccessQr.style.display = 'block';
+                        const randomDonation = Math.floor(Math.random() * 4501) + 500;
+                        updateDonationTracker(randomDonation, true);
+                    } else {
+                        if(volunteerSuccessGeneric) volunteerSuccessGeneric.style.display = 'block';
+                    }
+                });
+            }
+           
+
+            // --- Gemini Listeners (with null checks) ---
+            const suggestDetailsBtn = document.getElementById('suggestDetailsBtn');
+            const getHopeBtn = document.getElementById('getHopeBtn');
+            const hopeMessageDiv = document.getElementById('hopeMessage');
+            const detailsTextarea = document.getElementById('details');
+            const needsSelect = document.getElementById('needs');
+
+            if(suggestDetailsBtn && needsSelect && detailsTextarea) { // Ensure all related elements exist
+                suggestDetailsBtn.addEventListener('click', async () => {
+                    const need = needsSelect.value;
+                    const originalText = '✨ Help Me List'; // Shorter text
+                    showLoading(suggestDetailsBtn, true, originalText);
+                    const prompt = `I am filling out a form for disaster relief. The category I selected is "${need}". 
+    Give me 3-4 specific, concise examples (max 15 words each) of what to write in the 'Additional Details' section to get help quickly. Format as a simple text block, each example on a new line, no extra explanation.`;
+                    const suggestions = await callGeminiAPI(prompt, "You are a helpful assistant for disaster relief.", 3, null, false);
+                    detailsTextarea.value = typeof suggestions === 'string' ? suggestions : 'Could not generate suggestions.'; // Handle potential errors
+                    showLoading(suggestDetailsBtn, false, originalText);
+                });
+            }
+
+            if(getHopeBtn && hopeMessageDiv) { // Ensure all related elements exist
+                getHopeBtn.addEventListener('click', async () => {
+                    const originalText = '✨ Get a Hopeful Message';
+                    showLoading(getHopeBtn, true, originalText);
+                    hopeMessageDiv.classList.add('hidden'); // Hide previous message
+                    const prompt = "Write a short, 1-2 sentence hopeful and encouraging message for someone affected by a natural disaster asking for help.";
+                    const message = await callGeminiAPI(prompt, "You are a kind and supportive counselor.", 3, null, false);
+                    hopeMessageDiv.innerText = typeof message === 'string' ? message : 'Could not get message. Please know that help is available and you are not alone.'; // Handle potential errors
+                    hopeMessageDiv.classList.remove('hidden'); // Show new message
+                    showLoading(getHopeBtn, false, originalText);
+                });
+            }
+
+            const offeringsSelect = document.getElementById('offerings');
+            const volunteerContainer = document.getElementById('volunteerIdeasContainer');
+            const getVolunteerIdeasBtn = document.getElementById('getVolunteerIdeasBtn');
+            const volunteerIdeasUl = document.getElementById('volunteerIdeas');
+
+            if(offeringsSelect && volunteerContainer && volunteerIdeasUl) { // Ensure all related elements exist
+                // Initial check
+                if (offeringsSelect.value === 'Volunteer Time') {
+                     volunteerContainer.classList.remove('hidden');
+                 } else {
+                     volunteerContainer.classList.add('hidden');
+                 }
+                // Listener for changes
+                offeringsSelect.addEventListener('change', () => {
+                    if (offeringsSelect.value === 'Volunteer Time') {
+                        volunteerContainer.classList.remove('hidden');
+                    } else {
+                        volunteerContainer.classList.add('hidden');
+                        volunteerIdeasUl.classList.add('hidden'); // Also hide list when switching away
+                    }
+                });
+            }
+
+            if(getVolunteerIdeasBtn && volunteerIdeasUl) { // Ensure all related elements exist
+                getVolunteerIdeasBtn.addEventListener('click', async () => {
+                    const originalText = '✨ Get Volunteer Ideas';
+                    showLoading(getVolunteerIdeasBtn, true, originalText);
+                    volunteerIdeasUl.classList.add('hidden'); // Hide previous results
+                    const prompt = `I want to volunteer my time after a flood. Give me 3 creative and practical volunteer ideas one person can do. Format as a simple list, starting each with '* '. Max 15 words per idea. No intro/outro.`;
+                    const ideas = await callGeminiAPI(prompt, "You are a helpful volunteer coordinator.", 3, null, false);
+                    
+                    volunteerIdeasUl.innerHTML = ''; // Clear previous list items
+                    
+                     if (typeof ideas === 'string' && ideas.includes('*')) { // Basic check if response looks like a list
+                        const ideaList = ideas.split('*').filter(item => item.trim().length > 0);
+                        ideaList.forEach(idea => {
+                            const li = document.createElement('li');
+                            li.innerText = idea.trim();
+                            volunteerIdeasUl.appendChild(li);
+                        });
+                        volunteerIdeasUl.classList.remove('hidden'); // Show list if successful
+                     } else {
+                         // Handle error or unexpected response
+                         const li = document.createElement('li');
+                         li.innerText = typeof ideas === 'string' ? ideas : 'Could not generate ideas. Consider helping at local shelters or donation centers.'; // Show error/fallback
+                         volunteerIdeasUl.appendChild(li);
+                         volunteerIdeasUl.classList.remove('hidden');
+                     }
+                    
+                    showLoading(getVolunteerIdeasBtn, false, originalText);
+                });
+            }
+        });
+
+    </script>
+</body>
+</html>
 
