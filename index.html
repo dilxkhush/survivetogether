@@ -11,10 +11,6 @@
     <!-- Load Inter font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
     
-    <!-- Load Leaflet.js for Map -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    
     <!-- Configure Tailwind for Dark Mode -->
     <script>
         tailwind.config = {
@@ -49,25 +45,6 @@
             transition: background-color 0.3s ease, color 0.3s ease;
         }
         
-        /* Map Container Height */
-        #map {
-            height: 450px;
-            border-radius: 0.5rem;
-            z-index: 10; /* Ensure map is interactable */
-        }
-        
-        /* Leaflet Dark Mode Popup */
-        .dark .leaflet-popup-content-wrapper {
-            background-color: #374151; /* gray-700 */
-            color: #f3f4f6; /* gray-100 */
-        }
-        .dark .leaflet-popup-tip {
-            background-color: #374151; /* gray-700 */
-        }
-        .dark .leaflet-control-attribution a {
-            color: #9ca3af; /* gray-400 */
-        }
-        
         /* Style for the modal backdrop */
         .modal-backdrop {
             background-color: rgba(0, 0, 0, 0.5);
@@ -83,7 +60,7 @@
         
         /* Hero section background image */
         .hero-background {
-            background-image: url('https://image.pollinations.ai/prompt/Flood%20impact%20on%20village,%20poignant,%20sad%20sky,%20realistic?width=1600&height=900&seed=123');
+            background-image: url('https://image.pollinations.ai/prompt/Flood%20impact%20on%20village,%20poignant,%20sad%20sky,%20realistic?width=1600&height=900&seed=123'); /* Sad flood image */
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -179,7 +156,6 @@
             justify-content: space-between;
             padding: 0 1rem;
             box-sizing: border-box;
-            z-index: 20; /* Above slider images */
         }
         .slider-nav button {
             background-color: rgba(255, 255, 255, 0.7);
@@ -214,7 +190,6 @@
             transform: translateX(-50%);
             display: flex;
             gap: 0.5rem;
-            z-index: 20; /* Above slider images */
         }
         .slider-dot {
             width: 0.75rem;
@@ -284,13 +259,12 @@
             <h1 class="text-3xl font-bold text-blue-600 dark:text-blue-500">Survive Together</h1>
             <div class="flex items-center space-x-4">
                 <a href="#home" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-md text-lg font-medium">Home</a>
-                <a href="#map-section" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-md text-lg font-medium">Map</a>
                 <a href="#stories" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-md text-lg font-medium">Stories</a>
                 <a href="#about" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-md text-lg font-medium">About</a>
                 <a href="#contact" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-md text-lg font-medium">Contact</a>
                 
                 <!-- Theme Toggle Button -->
-                <button id="theme-toggle-btn" class="p-2 rounded-full text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
+                <button id="theme-toggle-btn" class_="p-2 rounded-full text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
                     <!-- Moon Icon -->
                     <svg id="theme-icon-moon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
@@ -350,16 +324,6 @@
             </div>
         </section>
 
-        <!-- NEW Map Section -->
-        <section id="map-section" class="mb-16 pt-16">
-            <h3 class="text-4xl font-bold text-center text-gray-800 dark:text-gray-100 mb-8">Live Affected Areas</h3>
-            <p class="text-xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto text-center mb-8">
-                This map shows real-time (simulated) reports of flood-affected regions. Click on a hotspot to learn more.
-            </p>
-            <div id="map" class="shadow-lg"></div>
-        </section>
-
-
         <!-- Image Showcase Slider -->
         <section class="mb-16">
             <h3 class="text-4xl font-bold text-center text-gray-800 dark:text-gray-100 mb-8">Glimpses of Hope</h3>
@@ -386,14 +350,14 @@
             </div>
         </section>
         
-        <!-- Stories Section -->
+        <!-- NEW Stories Section -->
         <section id="stories" class="mb-20 pt-16">
             <h3 class="text-4xl font-bold text-center text-gray-800 dark:text-gray-100 mb-12">Stories of Survival & Support</h3>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 
                 <!-- Story Card 1 -->
                 <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden flex flex-col">
-                    <img src="https://image.pollinations.ai/prompt/Grateful%20Indian%20woman%20smiling%20after%20disaster,%20hopeful,%20realistic?width=400&height=250&seed=1" alt="Meena's Story" class="w-full h-48 object-cover">
+                    <img src="https://image.pollinations.ai/prompt/Grateful%20Indian%20woman%20smiling%20after%20disaster,%20hopeful,%20realistic?width=400&height=250&seed=1" alt="Meena's Story" class_="w-full h-48 object-cover">
                     <div class="p-6 flex-grow">
                         <h4 class="text-2xl font-semibold mb-2 text-blue-600 dark:text-blue-400">Meena's Story: Finding Shelter</h4>
                         <p class="text-gray-600 dark:text-gray-300 mb-4 italic">"We lost everything in the flood. Thanks to a volunteer on this platform, my children and I found a safe place to sleep. We are so grateful."</p>
@@ -403,7 +367,7 @@
                 
                 <!-- Story Card 2 -->
                 <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden flex flex-col">
-                    <img src="https://image.pollinations.ai/prompt/Young%20Indian%20man%20volunteering,%20handing%20out%20water,%20realistic?width=400&height=250&seed=2" alt="Raj's Story" class="w-full h-48 object-cover">
+                    <img src="https://image.pollinations.ai/prompt/Young%20Indian%20man%20volunteering,%20handing%20out%20water,%20realistic?width=400&height=250&seed=2" alt="Raj's Story" class_="w-full h-48 object-cover">
                     <div class="p-6 flex-grow">
                         <h4 class="text-2xl font-semibold mb-2 text-green-600 dark:text-green-400">Raj's Story: Making a Difference</h4>
                         <p class="text-gray-600 dark:text-gray-300 mb-4 italic">"I just had my car and some free time. I signed up as a volunteer, and within an hour I was transporting medical supplies to a family that couldn't get out."</p>
@@ -413,7 +377,7 @@
                 
                 <!-- Story Card 3 -->
                 <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden flex flex-col">
-                    <img src="https://image.pollinations.ai/prompt/Community%20kitchen%20in%20India,%20serving%20food%20after%20flood,%20realistic?width=400&height=250&seed=3" alt="Community Kitchen" class="w-full h-48 object-cover">
+                    <img src="https://image.pollinations.ai/prompt/Community%20kitchen%20in%20India,%20serving%20food%20after%20flood,%20realistic?width=400&height=250&seed=3" alt="Community Kitchen" class_="w-full h-48 object-cover">
                     <div class="p-6 flex-grow">
                         <h4 class="text-2xl font-semibold mb-2 text-yellow-600 dark:text-yellow-400">Impact: The Community Kitchen</h4>
                         <p class="text-gray-600 dark:text-gray-300 mb-4 italic">"Your small donations helped us set up a kitchen that is now feeding over 200 people a day. It's more than food; it's a place of hope."</p>
@@ -558,8 +522,7 @@
     </div>
 
     <script>
-        // === GLOBAL VARIABLES ===
-        // Modal elements
+        // Get modal elements
         const modal = document.getElementById('modal');
         const modalContent = document.getElementById('modalContent');
         const modalTitle = document.getElementById('modalTitle');
@@ -567,11 +530,11 @@
         const closeSuccessBtn = document.getElementById('closeSuccessBtn');
         const closeQrSuccessBtn = document.getElementById('closeQrSuccessBtn');
         
-        // Button elements
+        // Get button elements
         const getHelpBtn = document.getElementById('getHelpBtn');
         const offerHelpBtn = document.getElementById('offerHelpBtn');
         
-        // Form & Success messages
+        // Get form and success message
         const formContainer = document.getElementById('supportForm');
         const successMessage = document.getElementById('successMessage');
         const qrSuccessMessage = document.getElementById('qrSuccessMessage');
@@ -582,24 +545,13 @@
         const amountRaisedText = document.getElementById('amountRaisedText');
         const donationStatusText = document.getElementById('donationStatusText');
         
-        // Donation state
+        // Use a large internal goal so the bar grows slowly
         const internalGoal = 500000; // Starting at 150k, this is 30%
         let currentAmountRaised = 150000; // Starting value
 
-        // Map variables
-        let map;
-        let lightTileLayer, darkTileLayer;
-        const fakeAffectedAreas = [
-            { lat: 26.1445, lng: 91.7362, name: 'Assam Flood Zone', level: 'High', details: 'Severe flooding in Guwahati and surrounding areas. Immediate need for medical supplies and clean water.' },
-            { lat: 28.6139, lng: 77.2090, name: 'Delhi (Yamuna)', level: 'Medium', details: 'River levels rising, low-lying areas evacuated. Shelters are active.' },
-            { lat: 19.0760, lng: 72.8777, name: 'Mumbai Coast', level: 'Medium', details: 'High tide and heavy rains causing waterlogging. Transportation affected.' },
-            { lat: 10.8505, lng: 76.2711, name: 'Kerala Backwaters', level: 'High', details: 'Landslides and flooding reported in hilly regions. Need for rescue teams.' },
-            { lat: 22.5726, lng: 88.3639, name: 'Kolkata Outskirts', level: 'Low', details: 'Waterlogging reported, situation currently under control. Monitoring active.' }
-        ];
-
         // --- Gemini API Configuration ---
         const apiKey = ""; // Per instructions, leave empty.
-        const apiUrl = `https://generativelace.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
 
         /**
          * Shows a loading state on a button
@@ -767,6 +719,7 @@
             function step(timestamp) {
                 if (!startTime) startTime = timestamp;
                 const progress = Math.min((timestamp - startTime) / duration, 1);
+                // Apply ease-out quad formula for a smoother animation
                 const easedProgress = progress * (2 - progress);
                 const currentValue = Math.floor(easedProgress * change + startValue);
                 
@@ -785,21 +738,26 @@
         const updateDonationTracker = (donationAmount, useAnimation = true) => {
             const newTotal = currentAmountRaised + donationAmount;
             
+            // Animate the number counting up
             if (useAnimation) {
                 animateCountUp(amountRaisedText, newTotal, 1500);
             } else {
                 amountRaisedText.innerText = `₹${newTotal.toLocaleString('en-IN')}`;
             }
 
+            // Update the bar width
             const newPercentage = (newTotal / internalGoal) * 100;
             progressBarFill.style.width = `${Math.min(newPercentage, 100)}%`;
             progressBarFill.setAttribute('aria-valuenow', newPercentage);
 
+            // Update the global total
             currentAmountRaised = newTotal;
 
+            // Update status text
             donationStatusText.innerText = "Increasing...";
             donationStatusText.classList.add('text-green-600', 'dark:text-green-400');
 
+            // Reset status text after animation
             setTimeout(() => {
                 donationStatusText.innerText = "Your support is invaluable!";
                 donationStatusText.classList.remove('text-green-600', 'dark:text-green-400');
@@ -921,66 +879,6 @@ Example:
             });
         }
         // --- End Gemini Functions ---
-        
-        // --- Map Initialization ---
-        function initMap(isDarkMode) {
-            // Define Tile Layers
-            lightTileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            });
-            
-            darkTileLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
-            });
-            
-            // Initialize Map
-            map = L.map('map').setView([20.5937, 78.9629], 5); // Center on India
-            
-            // Add initial tile layer based on theme
-            if (isDarkMode) {
-                darkTileLayer.addTo(map);
-            } else {
-                lightTileLayer.addTo(map);
-            }
-
-            // Add markers for fake data
-            fakeAffectedAreas.forEach(area => {
-                const color = area.level === 'High' ? 'red' : (area.level === 'Medium' ? 'orange' : 'yellow');
-                
-                L.circle([area.lat, area.lng], {
-                    color: color,
-                    fillColor: color,
-                    fillOpacity: 0.4,
-                    radius: area.level === 'High' ? 80000 : 50000
-                }).addTo(map)
-                  .bindPopup(`
-                    <strong style="color: ${color};">${area.name}</strong><br>
-                    <strong>Alert Level:</strong> ${area.level}<br>
-                    <p>${area.details}</p>
-                  `);
-            });
-        }
-        
-        function switchMapTheme(isDarkMode) {
-            if (!map) return; // Don't run if map isn't initialized
-            
-            if (isDarkMode) {
-                if (map.hasLayer(lightTileLayer)) {
-                    map.removeLayer(lightTileLayer);
-                }
-                if (!map.hasLayer(darkTileLayer)) {
-                    map.addLayer(darkTileLayer);
-                }
-            } else {
-                if (map.hasLayer(darkTileLayer)) {
-                    map.removeLayer(darkTileLayer);
-                }
-                if (!map.hasLayer(lightTileLayer)) {
-                    map.addLayer(lightTileLayer);
-                }
-            }
-        }
-        // --- End Map Logic ---
 
         // --- Image Slider Logic ---
         const sliderWrapper = document.querySelector('.slider-wrapper');
@@ -1092,7 +990,6 @@ Example:
             const isDark = document.documentElement.classList.toggle('dark');
             localStorage.theme = isDark ? 'dark' : 'light';
             updateThemeIcons(isDark);
-            switchMapTheme(isDark); // Switch map theme
         });
         
         // --- End Theme Toggle Logic ---
@@ -1168,9 +1065,8 @@ Example:
 
         // Initialize everything on load
         document.addEventListener('DOMContentLoaded', () => {
-            const isDark = document.documentElement.classList.contains('dark');
-            
             // Set initial state of theme toggle
+            const isDark = document.documentElement.classList.contains('dark');
             updateThemeIcons(isDark);
             
             // Set initial state of progress bar and text
@@ -1181,9 +1077,6 @@ Example:
             
             // Start the rapid counter!
             startRapidCounter();
-            
-            // Initialize the map
-            initMap(isDark);
         });
 
     </script>
