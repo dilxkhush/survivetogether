@@ -202,7 +202,9 @@
 
         /* Active navigation link style */
         .nav-link {
-            border-bottom: 2px solid transparent;
+            @apply px-3 py-2 rounded-md text-lg font-medium text-gray-600 dark:text-gray-300 transition-colors duration-200;
+            @apply hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-blue-600 dark:hover:text-blue-400;
+            border-bottom: 3px solid transparent;
         }
         .active-nav-link {
             @apply font-bold text-blue-600 dark:text-blue-400;
@@ -211,6 +213,7 @@
         .dark .active-nav-link {
             border-bottom-color: #60a5fa; /* blue-400 */
         }
+
 
         /* Custom Scrollbar for Recent Donations */
         #recent-donations-container::-webkit-scrollbar {
@@ -261,11 +264,11 @@
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
             <h1 class="text-3xl font-bold text-blue-600 dark:text-blue-500">Survive Together</h1>
             <div class="flex items-center space-x-4">
-                <a href="#home" class="nav-link text-gray-600 dark:text-gray-300 px-3 py-2 rounded-md text-lg font-medium hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200" data-section="home">Home</a>
-                <a href="#map-section" class="nav-link text-gray-600 dark:text-gray-300 px-3 py-2 rounded-md text-lg font-medium hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200" data-section="map-section">Map</a>
-                <a href="#stories" class="nav-link text-gray-600 dark:text-gray-300 px-3 py-2 rounded-md text-lg font-medium hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200" data-section="stories">Stories</a>
-                <a href="#about" class="nav-link text-gray-600 dark:text-gray-300 px-3 py-2 rounded-md text-lg font-medium hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200" data-section="about">About</a>
-                <a href="#contact" class="nav-link text-gray-600 dark:text-gray-300 px-3 py-2 rounded-md text-lg font-medium hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200" data-section="contact">Contact</a>
+                <a href="#home" class="nav-link" data-section="home">Home</a>
+                <a href="#map-section" class="nav-link" data-section="map-section">Map</a>
+                <a href="#stories" class="nav-link" data-section="stories">Stories</a>
+                <a href="#about" class="nav-link" data-section="about">About</a>
+                <a href="#contact" class="nav-link" data-section="contact">Contact</a>
                 
                 <button id="theme-toggle-btn" class="p-2 rounded-full text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
                     <svg id="theme-icon-moon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -409,7 +412,7 @@
                     </div>
                     
                     <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden flex flex-col">
-                        <img src="httpsDab (dance)/:Young%20Indian%20man%20volunteering,%20handing%20out%20water,%20realistic?width=400&height=250&seed=2" alt="Raj's Story" class="w-full h-48 object-cover">
+                        <img src="https://image.pollinations.ai/prompt/Young%20Indian%20man%20volunteering,%20handing%20out%20water,%20realistic?width=400&height=250&seed=2" alt="Raj's Story" class="w-full h-48 object-cover">
                         <div class="p-6 flex-grow">
                             <h4 class="text-2xl font-semibold mb-2 text-green-600 dark:text-green-400">Raj's Story: Making a Difference</h4>
                             <p class="text-gray-600 dark:text-gray-300 mb-4 italic">"I just had my car and some free time. I signed up as a volunteer, and within an hour I was transporting medical supplies to a family that couldn't get out."</p>
@@ -418,7 +421,7 @@
                     </div>
                     
                     <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden flex flex-col">
-                        <img src="https.disaster-image.com/community_kitchen.jpg" alt="Community Kitchen" class="w-full h-48 object-cover">
+                        <img src="https://image.pollinations.ai/prompt/Community%20kitchen%20in%20India,%20serving%20food%20after%20flood,%20realistic?width=400&height=250&seed=3" alt="Community Kitchen" class="w-full h-48 object-cover">
                         <div class="p-6 flex-grow">
                             <h4 class="text-2xl font-semibold mb-2 text-yellow-600 dark:text-yellow-400">Impact: The Community Kitchen</h4>
                             <p class="text-gray-600 dark:text-gray-300 mb-4 italic">"Your small donations helped us set up a kitchen that is now feeding over 200 people a day. It's more than food; it's a place of hope."</p>
@@ -502,7 +505,7 @@
                     Get Live News
                 </button>
                 <div id="news-content-area" class="min-h-[200px]">
-                    <!-- Loading state will appear here -->
+                    <!-- Loading state and news cards will appear here -->
                 </div>
             </section>
             <!-- END: Live News Section -->
@@ -641,7 +644,7 @@
         <div id="volunteer-success-qr" class="page-hidden text-center max-w-lg mx-auto bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg mt-8">
             <h4 class="text-3xl font-semibold text-gray-800 dark:text-gray-100 mb-4">Complete Your Donation</h4>
             <p class="text-lg text-gray-600 dark:text-gray-300 mb-6">Thank you for your generosity! Please scan the QR code below with your payment app to complete the donation.</p>
-            <img id="qrCodeImg-vol" src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=SurviveTogether-Donation" alt="QR Code for Donation" class="mx-auto my-4 border-4 border-gray-200 dark:border-gray-600 rounded-lg bg-white">
+            <img id="qrCodeImg-vol" src="httpsimg.com/qr_code_placeholder.png" alt="QR Code for Donation" class="mx-auto my-4 border-4 border-gray-200 dark:border-gray-600 rounded-lg bg-white">
             <p class="text-lg text-gray-700 dark:text-gray-200 font-medium">After payment, please send a screenshot to:</p>
             <p class="text-xl font-bold text-blue-600 dark:text-blue-400 my-2">donations@survivetogether</p>
             <p class="text-md text-gray-500 dark:text-gray-400">This helps us track your donation and send you a receipt.</p>
@@ -698,7 +701,7 @@
         let map;
         let lightTileLayer, darkTileLayer;
         
-        const apiKey = "";
+        const apiKey = ""; // API key is handled by the environment
         const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
 
         /**
@@ -718,15 +721,17 @@
         }
 
         /**
-         * UPDATED: Calls the Gemini API, now supports JSON Schema
+         * Calls the Gemini API, now supports JSON Schema and Google Search
          */
         async function callGeminiAPI(prompt, systemInstruction = null, maxRetries = 3, jsonSchema = null, useSearch = false) {
             const payload = {
                 contents: [{ parts: [{ text: prompt }] }],
-                tools: useSearch ? [{ "google_search": {} }] : [],
             };
             if (systemInstruction) {
                 payload.systemInstruction = { parts: [{ text: systemInstruction }] };
+            }
+             if (useSearch) {
+                payload.tools = [{ "google_search": {} }];
             }
             if (jsonSchema) {
                 payload.generationConfig = {
@@ -743,7 +748,10 @@
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(payload)
                     });
-                    if (!response.ok) throw new Error(`API Error: ${response.statusText}`);
+                    if (!response.ok) {
+                        console.error("API Error Response:", await response.text());
+                        throw new Error(`API Error: ${response.status}`);
+                    }
                     
                     const result = await response.json();
                     const candidate = result.candidates?.[0];
@@ -756,6 +764,7 @@
                         }
                         return part.text; // Return plain text
                     } else {
+                        console.error("Invalid response structure:", result);
                         throw new Error("Invalid response structure from API.");
                     }
                 } catch (error) {
@@ -1016,22 +1025,33 @@
             const navLinks = document.querySelectorAll('.nav-link');
             const observer = new IntersectionObserver((entries) => {
                 let activeSectionId = 'home';
-                entries.forEach(entry => {
-                    if (entry.isIntersecting && entry.intersectionRatio > 0.4) { 
-                        activeSectionId = entry.target.id;
+                
+                // Find the topmost visible section
+                for (const entry of entries) {
+                    if (entry.isIntersecting) {
+                         // A simple way to find the "highest" section on screen
+                         if (entry.boundingClientRect.top >= 0 && entry.boundingClientRect.top < (window.innerHeight / 2)) {
+                             activeSectionId = entry.target.id;
+                             break;
+                         }
                     }
-                });
-                if (window.scrollY < document.getElementById('home').offsetHeight * 0.5) { 
+                }
+                 // Fallback for when at the top of the page
+                if (window.scrollY < 300) {
                      activeSectionId = 'home';
                 }
+
                 navLinks.forEach(link => {
                     link.classList.remove('active-nav-link');
                     if (link.dataset.section === activeSectionId) {
                         link.classList.add('active-nav-link');
                     }
                 });
-            }, { threshold: [0.4, 0.6] }); 
+            }, { threshold: 0.1, rootMargin: "-50% 0px -50% 0px" }); // Tweak thresholds for better accuracy
+
             sections.forEach(section => observer.observe(section));
+            // Set home as active on load
+            document.querySelector('.nav-link[data-section="home"]').classList.add('active-nav-link');
         }
         // --- END: Active Nav Link Scroll Spy ---
 
@@ -1098,9 +1118,10 @@
             
             getNewsBtn.style.display = 'none'; // Hide button
             newsContentArea.innerHTML = `<div class="flex justify-center items-center min-h-[200px]"><div class="loading-spinner-small"></div></div>`; // Show loading spinner
+            newsContentArea.className = 'min-h-[200px]'; // Reset grid
 
-            const prompt = "Fetch the top 3-4 latest news articles related to 'flood relief' and 'disaster response' in Punjab, India. Summarize each article concisely. Provide a headline, a 1-2 sentence summary, the source's title, and the direct URL for each.";
-            const systemInstruction = "You are a news aggregator. You must only return JSON formatted according to the schema. You must use your Google Search tool to find recent, relevant information.";
+            const prompt = "Fetch the top 4 latest news articles related to 'flood relief' and 'disaster response' in Punjab, India. Summarize each article concisely. Provide a headline, a 1-2 sentence summary, the source's title, and the direct URL for each.";
+            const systemInstruction = "You are a news aggregator. You must only return JSON formatted according to the schema. You must use your Google Search tool to find recent, relevant information. Do not return empty results.";
             const schema = {
                 "type": "ARRAY",
                 "items": {
@@ -1134,7 +1155,7 @@
                     card.innerHTML = `
                         <div class="p-6 flex flex-col flex-grow">
                             <h4 class="text-xl font-semibold mb-3 text-gray-900 dark:text-gray-100">${article.headline}</h4>
-                            <p class="text-base text-gray-600 dark:text-gray-300 mb-4">${article.summary}</p>
+                            <p class="text-base text-gray-600 dark:text-gray-300 mb-4 flex-grow">${article.summary}</p>
                             <a href="${article.url}" target="_blank" rel="noopener noreferrer" class="news-card-link">
                                 Read more at ${article.sourceTitle} &rarr;
                             </a>
@@ -1232,5 +1253,84 @@
                     }
                     volunteerSuccessQr.style.display = 'block';
                     const randomDonation = Math.floor(Math.random() * 4501) + 500;
-                    updateDonationTracker(.
+                    updateDonationTracker(randomDonation, true);
+                } else {
+                    volunteerSuccessGeneric.style.display = 'block';
+                }
+            });
 
+            // --- Gemini Listeners ---
+            const suggestDetailsBtn = document.getElementById('suggestDetailsBtn');
+            const getHopeBtn = document.getElementById('getHopeBtn');
+            const hopeMessageDiv = document.getElementById('hopeMessage');
+            const detailsTextarea = document.getElementById('details');
+            const needsSelect = document.getElementById('needs');
+
+            if(suggestDetailsBtn) {
+                suggestDetailsBtn.addEventListener('click', async () => {
+                    const need = needsSelect.value;
+                    const originalText = '✨ Help Me List My Needs';
+                    showLoading(suggestDetailsBtn, true, originalText);
+                    const prompt = `I am filling out a form for disaster relief. The category I selected is "${need}". 
+    Give me 3-4 specific examples of what to write in the 'Additional Details' section...`;
+                    const suggestions = await callGeminiAPI(prompt, "You are a helpful assistant...", 3, null, false);
+                    detailsTextarea.value = suggestions;
+                    showLoading(suggestDetailsBtn, false, originalText);
+                });
+            }
+
+            if(getHopeBtn) {
+                getHopeBtn.addEventListener('click', async () => {
+                    const originalText = '✨ Get a Hopeful Message';
+                    showLoading(getHopeBtn, true, originalText);
+                    hopeMessageDiv.classList.add('hidden');
+                    const prompt = "Write a short, 1-2 sentence hopeful and encouraging message...";
+                    const message = await callGeminiAPI(prompt, "You are a kind and supportive counselor.", 3, null, false);
+                    hopeMessageDiv.innerText = message;
+                    hopeMessageDiv.classList.remove('hidden');
+                    showLoading(getHopeBtn, false, originalText);
+                });
+            }
+
+            const offeringsSelect = document.getElementById('offerings');
+            const volunteerContainer = document.getElementById('volunteerIdeasContainer');
+            const getVolunteerIdeasBtn = document.getElementById('getVolunteerIdeasBtn');
+            const volunteerIdeasUl = document.getElementById('volunteerIdeas');
+
+            if(offeringsSelect) {
+                if (offeringsSelect.value === 'Volunteer Time') {
+                    volunteerContainer.classList.remove('hidden');
+                }
+                offeringsSelect.addEventListener('change', () => {
+                    if (offeringsSelect.value === 'Volunteer Time') {
+                        volunteerContainer.classList.remove('hidden');
+                    } else {
+                        volunteerContainer.classList.add('hidden');
+                        volunteerIdeasUl.classList.add('hidden');
+                    }
+                });
+            }
+
+            if(getVolunteerIdeasBtn) {
+                getVolunteerIdeasBtn.addEventListener('click', async () => {
+                    const originalText = '✨ Get Volunteer Ideas';
+                    showLoading(getVolunteerIdeasBtn, true, originalText);
+                    volunteerIdeasUl.classList.add('hidden');
+                    const prompt = `I want to volunteer my time... Give me 3 creative and practical ideas...`;
+                    const ideas = await callGeminiAPI(prompt, "You are a helpful volunteer coordinator.", 3, null, false);
+                    volunteerIdeasUl.innerHTML = '';
+                    const ideaList = ideas.split('*').filter(item => item.trim().length > 0);
+                    ideaList.forEach(idea => {
+                        const li = document.createElement('li');
+                        li.innerText = idea.trim();
+                        volunteerIdeasUl.appendChild(li);
+                    });
+                    volunteerIdeasUl.classList.remove('hidden');
+                    showLoading(getVolunteerIdeasBtn, false, originalText);
+                });
+            }
+        });
+
+    </script>
+</body>
+</html>
